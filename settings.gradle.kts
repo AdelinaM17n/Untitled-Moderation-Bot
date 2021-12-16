@@ -5,14 +5,14 @@ pluginManagement {
         kotlin("plugin.serialization") version "1.5.30"
 
         // Update this in libs.version.toml when you change it here
-        id("io.gitlab.arturbosch.detekt") version "1.18.0"
+        //id("io.gitlab.arturbosch.detekt") version "1.18.0"
 
-        id("com.github.jakemarsden.git-hooks") version "0.0.1"
+        //id("com.github.jakemarsden.git-hooks") version "0.0.1"
         id("com.github.johnrengelman.shadow") version "5.2.0"
     }
 }
 
-rootProject.name = "template"
+rootProject.name = "Untitled-Moderation-Bot"
 
 enableFeaturePreview("VERSION_CATALOGS")
 

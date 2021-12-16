@@ -6,12 +6,12 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 
-    id("com.github.jakemarsden.git-hooks")
+    //id("com.github.jakemarsden.git-hooks")
     id("com.github.johnrengelman.shadow")
-    id("io.gitlab.arturbosch.detekt")
+    //id("io.gitlab.arturbosch.detekt")
 }
 
-group = "template"
+group = "io.github.maheevil.modbot"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    detektPlugins(libs.detekt)
+    //detektPlugins(libs.detekt)
 
     implementation(libs.kord.extensions)
     implementation(libs.kotlin.stdlib)
@@ -39,13 +39,7 @@ dependencies {
 
 application {
     // This is deprecated, but the Shadow plugin requires it
-    mainClassName = "template.AppKt"
-}
-
-gitHooks {
-    setHooks(
-        mapOf("pre-commit" to "detekt")
-    )
+    mainClassName = "io.github.maheevil.modbot.AppKt"
 }
 
 tasks.withType<KotlinCompile> {
@@ -58,7 +52,7 @@ tasks.withType<KotlinCompile> {
 tasks.jar {
     manifest {
         attributes(
-            "Main-Class" to "template.AppKt"
+            "Main-Class" to "io.github.maheevil.modbot.AppKt"
         )
     }
 }
@@ -69,7 +63,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-detekt {
+/*detekt {
     buildUponDefaultConfig = true
-    config = rootProject.files("detekt.yml")
-}
+    //config = rootProject.files("detekt.yml")
+}*/
