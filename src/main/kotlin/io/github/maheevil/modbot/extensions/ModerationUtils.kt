@@ -17,7 +17,7 @@ class ModerationUtils : Extension() {
             name = "ban"
             description = "Bans the user. Syntax : <prefix>ban <user_id> <reason>"
             action {
-                if (user == null)
+                if (user == null || guild == null)
                     return@action
 
                 if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.BanMembers)){
@@ -25,6 +25,7 @@ class ModerationUtils : Extension() {
                     return@action
                 }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.BanMembers)){
                     message.respond("The bot cannot ban a other moderator/admin")
+                    return@action
                 }
 
                 guild?.ban(arguments.target){reason = arguments.reason}
@@ -38,7 +39,7 @@ class ModerationUtils : Extension() {
             name = "unban"
             description = "Unbans the user. Syntax : <prefix>unban <user_id> <reason>"
             action {
-                if (user == null)
+                if (user == null || guild == null)
                     return@action
 
                 if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.BanMembers)){
@@ -46,8 +47,12 @@ class ModerationUtils : Extension() {
                     return@action
                 }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.BanMembers)){
                     message.respond("The bot cannot ban a other moderator/admin")
+                    return@action
+                }else if(guild?.getBanOrNull(arguments.target) == null){
+                    message.respond("The user is not banned")
+                    return@action
                 }
-                guild?.unban(arguments.target, arguments.reason)
+                guild?.unban(arguments.target,arguments.reason)
                 message.respond(
                         "Unbanned ${guild?.kord?.getUser(arguments.target)?.mention}, Reason given : ${arguments.reason}"
                 )
@@ -58,7 +63,7 @@ class ModerationUtils : Extension() {
             name = "kick"
             description = "Kicks the user. Syntax : <prefix>ban <user_id> <reason>"
             action {
-                if (user == null)
+                if (user == null || guild == null)
                     return@action
 
                 if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.KickMembers)){
@@ -66,6 +71,10 @@ class ModerationUtils : Extension() {
                     return@action
                 }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.KickMembers)){
                     message.respond("The bot cannot ban a other moderator/admin")
+                    return@action
+                }else if(guild!!.getMemberOrNull(arguments.target) == null){
+                    message.respond("The user is not in this Guild/Server")
+                    return@action
                 }
 
                 guild?.kick(arguments.target,arguments.reason)
