@@ -15,7 +15,7 @@ class ModerationUtils : Extension() {
     override suspend fun setup() {
         chatCommand(::ModCommandArgs) {
             name = "ban"
-            description = "Bans the user. Syntax : <prefix>ban <user_id> <reason>"
+            description = "Bans the user."
             action {
                 if (user == null || guild == null)
                     return@action
@@ -37,7 +37,7 @@ class ModerationUtils : Extension() {
 
         chatCommand(::ModCommandArgs) {
             name = "unban"
-            description = "Unbans the user. Syntax : <prefix>unban <user_id> <reason>"
+            description = "Unbans the user."
             action {
                 if (user == null || guild == null)
                     return@action
@@ -58,7 +58,7 @@ class ModerationUtils : Extension() {
 
         chatCommand(::ModCommandArgs) {
             name = "kick"
-            description = "Kicks the user. Syntax : <prefix>ban <user_id> <reason>"
+            description = "Kicks the user."
             action {
                 if (user == null || guild == null)
                     return@action
@@ -67,7 +67,7 @@ class ModerationUtils : Extension() {
                     message.respond("You don't have permissions for this action")
                     return@action
                 }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.KickMembers)){
-                    message.respond("The bot cannot ban a other moderator/admin")
+                    message.respond("The bot cannot kick a other moderator/admin")
                     return@action
                 }else if(guild!!.getMemberOrNull(arguments.target) == null){
                     message.respond("The user is not in this Guild/Server")
