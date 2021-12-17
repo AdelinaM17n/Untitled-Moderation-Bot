@@ -7,6 +7,7 @@ import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.utils.env
 import dev.kord.common.entity.Snowflake
 import io.github.maheevil.modbot.extensions.AntiScamProt
+import io.github.maheevil.modbot.extensions.ModerationUtils
 
 val TEST_SERVER_ID = Snowflake(
     env("TEST_SERVER").toLong()  // Get the test server ID from the env vars or a .env file
@@ -33,6 +34,7 @@ suspend fun main() {
 
         extensions {
             add(::AntiScamProt)
+            add(::ModerationUtils)
         }
     }
 
