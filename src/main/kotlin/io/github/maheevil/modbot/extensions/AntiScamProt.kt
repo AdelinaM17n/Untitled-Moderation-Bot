@@ -20,7 +20,7 @@ class AntiScamProt : Extension() {
             action {
                 val message = event.message
 
-                if (message.author?.isBot == true || message.getAuthorAsMember()?.getPermissions()?.contains(Permission.MentionEveryone) == true)
+                if (message.author == null || message.author?.isBot == true || message.getAuthorAsMember()?.getPermissions()?.contains(Permission.MentionEveryone) == true)
                     return@action
 
                 val mentionsEveryoneOrHere =
