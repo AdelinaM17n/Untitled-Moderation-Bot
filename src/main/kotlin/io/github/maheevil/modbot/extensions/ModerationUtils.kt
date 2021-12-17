@@ -23,7 +23,7 @@ class ModerationUtils : Extension() {
                 if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.BanMembers)){
                     message.respond("You don't have permissions for this action")
                     return@action
-                }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.BanMembers)){
+                }else if(guild!!.getMemberOrNull(arguments.target) != null && guild!!.getMember(arguments.target).getPermissions().contains(Permission.BanMembers)){
                     message.respond("The bot cannot ban a other moderator/admin")
                     return@action
                 }
@@ -66,11 +66,11 @@ class ModerationUtils : Extension() {
                 if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.KickMembers)){
                     message.respond("You don't have permissions for this action")
                     return@action
-                }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.KickMembers)){
-                    message.respond("The bot cannot kick a other moderator/admin")
-                    return@action
                 }else if(guild!!.getMemberOrNull(arguments.target) == null){
                     message.respond("The user is not in this Guild/Server")
+                    return@action
+                }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.KickMembers)){
+                    message.respond("The bot cannot kick a other moderator/admin")
                     return@action
                 }
 
