@@ -45,9 +45,6 @@ class ModerationUtils : Extension() {
                 if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.BanMembers)){
                     message.respond("You don't have permissions for this action")
                     return@action
-                }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.BanMembers)){
-                    message.respond("The bot cannot ban a other moderator/admin")
-                    return@action
                 }else if(guild?.getBanOrNull(arguments.target) == null){
                     message.respond("The user is not banned")
                     return@action
