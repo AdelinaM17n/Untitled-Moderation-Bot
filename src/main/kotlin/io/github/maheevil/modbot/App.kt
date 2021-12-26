@@ -6,9 +6,9 @@ package io.github.maheevil.modbot
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.utils.env
 import dev.kord.common.entity.Snowflake
-import io.github.maheevil.modbot.extensions.moderation.auto_moderation.AntiScamProt
+import io.github.maheevil.modbot.extensions.moderation.events.AntiScamProt
 import io.github.maheevil.modbot.extensions.moderation.utill.ModerationUtils
-import io.github.maheevil.modbot.extensions.moderation.auto_moderation.RaidProt
+import io.github.maheevil.modbot.extensions.moderation.events.RaidProt
 
 val TEST_SERVER_ID = Snowflake(
     env("TEST_SERVER").toLong()  // Get the test server ID from the env vars or a .env file

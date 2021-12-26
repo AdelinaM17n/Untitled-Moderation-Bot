@@ -1,4 +1,4 @@
-package io.github.maheevil.modbot.extensions.moderation.auto_moderation
+package io.github.maheevil.modbot.extensions.moderation.events
 
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.event
