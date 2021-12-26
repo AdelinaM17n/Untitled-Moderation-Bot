@@ -1,4 +1,4 @@
-package io.github.maheevil.modbot.extensions
+package io.github.maheevil.modbot.extensions.moderation.utill
 
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.converters.impl.defaultingCoalescingString
