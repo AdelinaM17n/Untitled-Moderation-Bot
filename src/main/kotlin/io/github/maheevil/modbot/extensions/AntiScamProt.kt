@@ -20,7 +20,7 @@ class AntiScamProt : Extension() {
             action {
                 val message = event.message
 
-                if (message.author == null || message.author?.isBot == true || message.getAuthorAsMember()?.getPermissions()?.contains(Permission.MentionEveryone) == true)
+                if (event.getGuild() == null || message.author == null || message.author?.isBot == true || message.getAuthorAsMember()?.getPermissions()?.contains(Permission.MentionEveryone) == true)
                     return@action
 
                 val mentionsEveryoneOrHere =
@@ -29,8 +29,8 @@ class AntiScamProt : Extension() {
                         (message.content.contains("@everyone".toRegex()) && !message.content.contains("""\@everyone"""))
 
                 if (mentionsEveryoneOrHere && urlPattern.matcher(message.content).find()){
-                    message.getAuthorAsMember()?.kick("Anti-Scam: Sending a message that mentions @here or @everyone with a link")
                     message.delete()
+                    message.getAuthorAsMember()?.kick("Anti-Scam: Sending a message that mentions @here or @everyone with a link")
                 }
             }
         }

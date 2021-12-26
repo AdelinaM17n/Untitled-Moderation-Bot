@@ -8,6 +8,7 @@ import com.kotlindiscord.kord.extensions.utils.env
 import dev.kord.common.entity.Snowflake
 import io.github.maheevil.modbot.extensions.AntiScamProt
 import io.github.maheevil.modbot.extensions.ModerationUtils
+import io.github.maheevil.modbot.extensions.RaidProt
 
 val TEST_SERVER_ID = Snowflake(
     env("TEST_SERVER").toLong()  // Get the test server ID from the env vars or a .env file
@@ -22,19 +23,13 @@ suspend fun main() {
             enabled = true
 
             prefix { default ->
-                if (guildId == TEST_SERVER_ID) {
-                    // For the test server, we use ! as the command prefix
-                    "!"
-                } else {
-                    // For other servers, we use the configured default prefix
-                    default
-                }
+                if (guildId == TEST_SERVER_ID) "!" else default
             }
         }
-
         extensions {
             add(::AntiScamProt)
             add(::ModerationUtils)
+            add(::RaidProt)
         }
     }
 
