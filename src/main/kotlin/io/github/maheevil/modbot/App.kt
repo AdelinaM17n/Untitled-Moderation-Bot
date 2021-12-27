@@ -4,7 +4,7 @@ import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.utils.env
 import dev.kord.common.entity.Snowflake
 import io.github.maheevil.modbot.extensions.moderation.auto_moderation.AntiScamProt
-import io.github.maheevil.modbot.extensions.moderation.utill.ModerationUtils
+import io.github.maheevil.modbot.extensions.moderation.util.ModerationCommands
 import io.github.maheevil.modbot.extensions.moderation.auto_moderation.RaidProt
 import io.github.maheevil.modbot.extensions.moderation.logging.LogEventListener
 
@@ -27,7 +27,7 @@ suspend fun main() {
         }
         extensions {
             add(::AntiScamProt)
-            add(::ModerationUtils)
+            add(::ModerationCommands)
             add(::RaidProt)
             add(::LogEventListener)
         }

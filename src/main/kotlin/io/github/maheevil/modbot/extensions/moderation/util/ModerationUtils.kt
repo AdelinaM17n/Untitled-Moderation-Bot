@@ -1,4 +1,4 @@
-package io.github.maheevil.modbot.extensions.moderation.utill
+package io.github.maheevil.modbot.extensions.moderation.util
 
 import com.kotlindiscord.kord.extensions.utils.respond
 import dev.kord.common.Color

@@ -1,4 +1,4 @@
-package io.github.maheevil.modbot.extensions.moderation.utill
+package io.github.maheevil.modbot.extensions.moderation.util
 
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.converters.impl.defaultingCoalescingString
@@ -7,9 +7,8 @@ import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.chatCommand
 import com.kotlindiscord.kord.extensions.utils.respond
 import dev.kord.common.entity.Permission
-import dev.kord.core.behavior.ban
 
-class ModerationUtils : Extension() {
+class ModerationCommands : Extension() {
     override val name = "moderation"
 
     override suspend fun setup() {

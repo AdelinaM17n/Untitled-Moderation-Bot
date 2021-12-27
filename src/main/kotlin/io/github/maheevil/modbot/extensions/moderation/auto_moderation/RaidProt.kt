@@ -7,7 +7,7 @@ import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.message.MessageCreateEvent
 import io.github.maheevil.modbot.alertLogsChannelID
 import io.github.maheevil.modbot.extensions.moderation.logging.createAlertLog
-import io.github.maheevil.modbot.extensions.moderation.utill.kickUserWithLog
+import io.github.maheevil.modbot.extensions.moderation.util.kickUserWithLog
 
 class RaidProt : Extension() {
     override val name = "raidprot"
