@@ -24,7 +24,7 @@ suspend fun createModLog(channel: GuildMessageChannel, modAction: String, modera
         color = colour
         field("User",false){"<@${target.value}> `$targetUserNameWithDiscrim`"}
         field("Reason",false) {"`${reason ?: "No reason given"}`"}
-        field("Moderator",false){"${channel.getGuild().getMemberOrNull(moderator)?.mention ?: moderator}"}
+        field("Moderator",false){"${channel.getGuild().getMemberOrNull(moderator)?.mention ?: moderator.value}"}
         timestamp = Clock.System.now()
     }
 }
