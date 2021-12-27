@@ -3,6 +3,7 @@ package io.github.maheevil.modbot.extensions.moderation.logging
 import dev.kord.common.Color
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.createEmbed
+import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
 
 /** Reference for future me (color codes)
@@ -26,6 +27,11 @@ suspend fun createAlertLog(){
 
 }
 
-suspend fun createJoinLeaveLog(){
-
+suspend fun createJoinLeaveLog(channel: GuildMessageChannel, joined: Boolean, user: User){
+    channel.createEmbed {
+        title = "Member ${if(joined) "joined" else "left"}"
+        color = if(joined) Color(0x09850b) else Color(0xff0000)
+        field("User",false){ "${user.mention} ${user.username}" }
+        timestamp
+    }
 }

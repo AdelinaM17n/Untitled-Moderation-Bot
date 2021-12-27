@@ -10,6 +10,7 @@ import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.BanRemoveEvent
 import dev.kord.core.event.guild.MemberLeaveEvent
+import io.github.maheevil.modbot.joinLeaveLogChannelID
 import io.github.maheevil.modbot.modLogsChannelID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -28,9 +29,9 @@ class LogEventListener : Extension() {
                         .filter {it.targetId == event.getBan().userId && it.reason == event.getBan().reason
                                 && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60}.firstOrNull()
 
-                if(ban?.targetId == null || event.getGuild().getMemberOrNull(ban.userId)?.isBot == true) return@action
+                if(ban?.targetId == null || event.getGuild().getMemberOrNull(ban.userId)?.isBot == true) return@action println("null error something")
 
-                createModLog(event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,"banned", ban.userId, requireNotNull(ban.targetId), ban.reason, Color(0xff0000))
+                createModLog(event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,"banned", ban.userId, ban.targetId!!, ban.reason, Color(0xff0000))
             }
         }
 
@@ -41,16 +42,22 @@ class LogEventListener : Extension() {
 
                 if(unban?.targetId == null || event.getGuild().getMemberOrNull(unban.userId)?.isBot == true) return@action
 
-
-                createModLog(event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,"unbanned", unban.userId, requireNotNull(unban.targetId), unban.reason, Color(0x09850b))
+                createModLog(event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,"unbanned", unban.userId, unban.targetId!!, unban.reason, Color(0x09850b))
             }
         }
 
-        /*event<MemberLeaveEvent> {
+        event<MemberLeaveEvent> {
             action{
                 val kick = event.guild.getAuditLogEntries { AuditLogEvent.MemberKick }
+                        .filter { it.targetId == event.user.id && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60}.firstOrNull()
+
+                if(kick?.targetId != null && event.getGuild().getMemberOrNull(kick.userId)?.isBot == false ){
+                    createModLog(event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,"kicked",kick.userId,kick.targetId!!,kick.reason, Color(0xff5e00))
+                }
+
+                createJoinLeaveLog(event.guild.getChannel(joinLeaveLogChannelID) as GuildMessageChannel,false,event.user)
             }
-        }*/
+        }
     }
 }
 
