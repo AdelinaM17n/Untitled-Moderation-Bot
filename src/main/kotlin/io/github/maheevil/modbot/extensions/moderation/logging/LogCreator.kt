@@ -29,11 +29,11 @@ suspend fun createModLog(channel: GuildMessageChannel, modAction: String, modera
     }
 }
 
-suspend fun createAlertLog(channel: GuildMessageChannel,user: UserBehavior,msgContent: String, alertType: String){
+suspend fun createAlertLog(channel: GuildMessageChannel,user: User,msgContent: String, alertType: String){
     channel.createEmbed {
         title = alertType
         color = Color(0xff0000)
-        field("User",false){"${user.mention} `${user.asUser().username}#${user.asUser().discriminator}`"}
+        field("User",false){"${user.mention} `${user.username}#${user.discriminator}`"}
         field("Message Content",false){"`$msgContent`"}
         footer { text = "The message has been deleted and the user has been kicked" }
         timestamp = Clock.System.now()
