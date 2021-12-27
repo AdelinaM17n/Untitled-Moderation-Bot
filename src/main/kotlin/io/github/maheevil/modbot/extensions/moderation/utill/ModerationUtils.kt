@@ -20,18 +20,15 @@ class ModerationUtils : Extension() {
                 if (user == null || guild == null)
                     return@action
 
-                if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.BanMembers)){
+                if (guild?.getMemberOrNull(user!!.id)?.getPermissions()?.contains(Permission.BanMembers) != true){
                     message.respond("You don't have permissions for this action")
                     return@action
-                }else if(guild!!.getMemberOrNull(arguments.target) != null && guild!!.getMember(arguments.target).getPermissions().contains(Permission.BanMembers)){
+                }else if(guild?.getMemberOrNull(arguments.target)?.getPermissions()?.contains(Permission.BanMembers) == true){
                     message.respond("The bot cannot ban a other moderator/admin")
                     return@action
                 }
 
-                guild?.ban(arguments.target){reason = arguments.reason}
-                message.respond(
-                        "Banned ${guild?.kord?.getUser(arguments.target)?.mention}, Reason given : ${arguments.reason}"
-                )
+                createBanWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
             }
         }
 
@@ -42,17 +39,15 @@ class ModerationUtils : Extension() {
                 if (user == null || guild == null)
                     return@action
 
-                if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.BanMembers)){
+                if (guild?.getMember(user!!.id)?.getPermissions()?.contains(Permission.BanMembers) != true){
                     message.respond("You don't have permissions for this action")
                     return@action
                 }else if(guild?.getBanOrNull(arguments.target) == null){
                     message.respond("The user is not banned")
                     return@action
                 }
-                guild?.unban(arguments.target,arguments.reason)
-                message.respond(
-                        "Unbanned ${guild?.kord?.getUser(arguments.target)?.mention}, Reason given : ${arguments.reason}"
-                )
+
+                removeBanWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
             }
         }
 
@@ -63,21 +58,18 @@ class ModerationUtils : Extension() {
                 if (user == null || guild == null)
                     return@action
 
-                if (!guild!!.getMember(user!!.id).getPermissions().contains(Permission.KickMembers)){
+                if (guild?.getMember(user!!.id)?.getPermissions()?.contains(Permission.KickMembers) != true){
                     message.respond("You don't have permissions for this action")
                     return@action
-                }else if(guild!!.getMemberOrNull(arguments.target) == null){
+                }else if(guild?.getMemberOrNull(arguments.target) == null){
                     message.respond("The user is not in this Guild/Server")
                     return@action
-                }else if(guild!!.getMember(arguments.target).getPermissions().contains(Permission.KickMembers)){
+                }else if(guild?.getMember(arguments.target)?.getPermissions()?.contains(Permission.KickMembers) == true){
                     message.respond("The bot cannot kick a other moderator/admin")
                     return@action
                 }
 
-                guild?.kick(arguments.target,arguments.reason)
-                message.respond(
-                        "Kicked ${guild?.kord?.getUser(arguments.target)?.mention}, Reason given : ${arguments.reason}"
-                )
+                kickUserWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
             }
         }
     }
