@@ -30,7 +30,7 @@ class LogEventListener : Extension() {
                         .filter {it.targetId == event.getBan().userId && it.reason == event.getBan().reason
                                 && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60}.firstOrNull()
 
-                if(ban?.targetId == null || event.getGuild().getMemberOrNull(ban.userId)?.isBot == true) return@action println("null error something")
+                if(ban?.targetId == null || event.getGuild().getMemberOrNull(ban.userId)?.isBot == true) return@action
 
                 createModLog(event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,"banned", ban.userId, ban.targetId!!, ban.reason, Color(0xff0000))
             }
@@ -52,7 +52,7 @@ class LogEventListener : Extension() {
                 val kick = event.guild.getAuditLogEntries { AuditLogEvent.MemberKick }
                         .filter { it.targetId == event.user.id && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60}.firstOrNull()
 
-                if(kick?.targetId != null && event.getGuild().getMemberOrNull(kick.userId)?.isBot == false ){
+                if(kick?.targetId != null && event.getGuild().getMemberOrNull(kick.userId)?.isBot == false && event.guild.getBanOrNull(kick.targetId!!) == null){
                     createModLog(event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,"kicked",kick.userId,kick.targetId!!,kick.reason, Color(0xff5e00))
                 }
 
