@@ -9,6 +9,7 @@ import dev.kord.core.entity.AuditLogEntry
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.BanRemoveEvent
+import dev.kord.core.event.guild.MemberJoinEvent
 import dev.kord.core.event.guild.MemberLeaveEvent
 import io.github.maheevil.modbot.joinLeaveLogChannelID
 import io.github.maheevil.modbot.modLogsChannelID
@@ -56,6 +57,12 @@ class LogEventListener : Extension() {
                 }
 
                 createJoinLeaveLog(event.guild.getChannel(joinLeaveLogChannelID) as GuildMessageChannel,false,event.user)
+            }
+        }
+
+        event<MemberJoinEvent> {
+            action {
+                createJoinLeaveLog(event.guild.getChannel(joinLeaveLogChannelID) as GuildMessageChannel,true,event.member.asUser())
             }
         }
     }

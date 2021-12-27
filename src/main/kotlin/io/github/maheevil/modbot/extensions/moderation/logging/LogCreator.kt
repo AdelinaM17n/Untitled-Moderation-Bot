@@ -5,6 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.createEmbed
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
+import kotlinx.datetime.Clock
 
 /** Reference for future me (color codes)
  * kicked - 0xff5e00
@@ -32,6 +33,6 @@ suspend fun createJoinLeaveLog(channel: GuildMessageChannel, joined: Boolean, us
         title = "Member ${if(joined) "joined" else "left"}"
         color = if(joined) Color(0x09850b) else Color(0xff0000)
         field("User",false){ "${user.mention} ${user.username}" }
-        timestamp
+        timestamp = Clock.System.now()
     }
 }
