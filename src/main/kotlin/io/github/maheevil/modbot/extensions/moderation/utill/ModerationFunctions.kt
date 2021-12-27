@@ -27,9 +27,9 @@ suspend fun removeBanWithLog(meessage: Message,guild: GuildBehavior, moderator: 
     createModLog(guild.getChannel(modLogsChannelID) as GuildMessageChannel,"unbanned",moderator.id,target,unbanReason, Color(0x09850b))
 }
 
-suspend fun kickUserWithLog(meessage: Message, guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, kickReason: String?){
+suspend fun kickUserWithLog(meessage: Message?, guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, kickReason: String?){
     guild.ban(target){reason = kickReason}
-    meessage.respond(
+    meessage?.respond(
             "Kicked ${guild.kord.getUser(target)?.mention}, Reason given : $kickReason"
     )
     createModLog(guild.getChannel(modLogsChannelID) as GuildMessageChannel,"kicked",moderator.id,target,kickReason, Color(0xff5e00))

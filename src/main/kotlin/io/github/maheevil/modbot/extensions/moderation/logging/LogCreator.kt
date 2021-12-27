@@ -2,6 +2,7 @@ package io.github.maheevil.modbot.extensions.moderation.logging
 
 import dev.kord.common.Color
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.createEmbed
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
@@ -24,11 +25,19 @@ suspend fun createModLog(channel: GuildMessageChannel, modAction: String, modera
         field("User",false){"<@${target.value}> `$targetUserNameWithDiscrim`"}
         field("Reason",false) {"`${reason ?: "No reason given"}`"}
         field("Moderator",false){"${channel.getGuild().getMemberOrNull(moderator)?.mention ?: moderator}"}
+        timestamp = Clock.System.now()
     }
 }
 
-suspend fun createAlertLog(){
-
+suspend fun createAlertLog(channel: GuildMessageChannel,user: UserBehavior,msgContent: String, alertType: String){
+    channel.createEmbed {
+        title = alertType
+        color = Color(0xff0000)
+        field("User",false){"${user.mention} `${user.asUser().username}#${user.asUser().discriminator}`"}
+        field("Message Content",false){"`$msgContent`"}
+        footer { text = "The message has been deleted and the user has been kicked" }
+        timestamp = Clock.System.now()
+    }
 }
 
 suspend fun createJoinLeaveLog(channel: GuildMessageChannel, joined: Boolean, user: User){

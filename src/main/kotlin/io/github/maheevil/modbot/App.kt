@@ -11,7 +11,7 @@ import io.github.maheevil.modbot.extensions.moderation.logging.LogEventListener
 val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong())
 var joinLeaveLogChannelID: Snowflake = Snowflake(env("JOIN_LEAVE_LOG").toLong())
 var modLogsChannelID: Snowflake = Snowflake(env("MOD_LOGS").toLong())
-//var
+var alertLogsChannelID: Snowflake = Snowflake(env("ALERT_LOGS").toLong())
 
 private val TOKEN = env("TOKEN")
 
