@@ -20,7 +20,7 @@ suspend fun createBanWithLog(meessage: Message,guild: GuildBehavior, moderator: 
 }
 
 suspend fun removeBanWithLog(meessage: Message,guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, unbanReason: String?){
-    guild.ban(target){reason = unbanReason}
+    guild.unban(target,unbanReason)
     meessage.respond(
             "Unbanned ${guild.kord.getUser(target)?.mention}, Reason given : $unbanReason"
     )
@@ -28,7 +28,7 @@ suspend fun removeBanWithLog(meessage: Message,guild: GuildBehavior, moderator: 
 }
 
 suspend fun kickUserWithLog(meessage: Message?, guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, kickReason: String?){
-    guild.ban(target){reason = kickReason}
+    guild.kick(target,kickReason)
     meessage?.respond(
             "Kicked ${guild.kord.getUser(target)?.mention}, Reason given : $kickReason"
     )
