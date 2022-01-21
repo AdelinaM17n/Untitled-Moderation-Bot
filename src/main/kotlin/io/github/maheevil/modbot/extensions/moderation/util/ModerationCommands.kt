@@ -15,14 +15,13 @@ class ModerationCommands : Extension() {
         chatCommand(::ModCommandArgs) {
             name = "ban"
             description = "Bans the user."
+            requiredPerms.add(Permission.BanMembers)
+
             action {
                 if (user == null || guild == null)
                     return@action
 
-                if (guild?.getMemberOrNull(user!!.id)?.getPermissions()?.contains(Permission.BanMembers) != true){
-                    message.respond("You don't have permissions for this action")
-                    return@action
-                }else if(guild?.getMemberOrNull(arguments.target)?.getPermissions()?.contains(Permission.BanMembers) == true){
+                if(guild?.getMemberOrNull(arguments.target)?.getPermissions()?.contains(Permission.BanMembers) == true){
                     message.respond("The bot cannot ban a other moderator/admin")
                     return@action
                 }
@@ -34,17 +33,16 @@ class ModerationCommands : Extension() {
         chatCommand(::ModCommandArgs) {
             name = "unban"
             description = "Unbans the user."
+            requiredPerms.add(Permission.BanMembers)
+
             action {
                 if (user == null || guild == null)
                     return@action
 
-                if (guild?.getMember(user!!.id)?.getPermissions()?.contains(Permission.BanMembers) != true){
-                    message.respond("You don't have permissions for this action")
-                    return@action
-                }else if(guild?.getBanOrNull(arguments.target) == null){
+               if(guild?.getBanOrNull(arguments.target) == null){
                     message.respond("The user is not banned")
                     return@action
-                }
+               }
 
                 removeBanWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
             }
@@ -53,20 +51,19 @@ class ModerationCommands : Extension() {
         chatCommand(::ModCommandArgs) {
             name = "kick"
             description = "Kicks the user."
+            requiredPerms.add(Permission.KickMembers)
+
             action {
                 if (user == null || guild == null)
                     return@action
 
-                if (guild?.getMember(user!!.id)?.getPermissions()?.contains(Permission.KickMembers) != true){
-                    message.respond("You don't have permissions for this action")
-                    return@action
-                }else if(guild?.getMemberOrNull(arguments.target) == null){
+               if(guild?.getMemberOrNull(arguments.target) == null){
                     message.respond("The user is not in this Guild/Server")
                     return@action
-                }else if(guild?.getMember(arguments.target)?.getPermissions()?.contains(Permission.KickMembers) == true){
+               }else if(guild?.getMember(arguments.target)?.getPermissions()?.contains(Permission.KickMembers) == true){
                     message.respond("The bot cannot kick a other moderator/admin")
                     return@action
-                }
+               }
 
                 kickUserWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
             }
