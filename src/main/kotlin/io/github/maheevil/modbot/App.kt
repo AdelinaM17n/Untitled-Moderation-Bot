@@ -7,6 +7,7 @@ import io.github.maheevil.modbot.extensions.moderation.auto_moderation.AntiScamP
 import io.github.maheevil.modbot.extensions.moderation.util.ModerationCommands
 import io.github.maheevil.modbot.extensions.moderation.auto_moderation.RaidProt
 import io.github.maheevil.modbot.extensions.moderation.logging.LogEventListener
+import io.github.maheevil.modbot.extensions.util.suggestions.SuggestionCommand
 
 val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong())
 var joinLeaveLogChannelID: Snowflake = Snowflake(env("JOIN_LEAVE_LOG").toLong())
@@ -30,6 +31,7 @@ suspend fun main() {
             add(::ModerationCommands)
             add(::RaidProt)
             add(::LogEventListener)
+            add(::SuggestionCommand)
         }
     }
 
