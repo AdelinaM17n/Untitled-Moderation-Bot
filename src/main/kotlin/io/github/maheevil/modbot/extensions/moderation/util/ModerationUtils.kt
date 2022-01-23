@@ -11,6 +11,7 @@ import dev.kord.core.behavior.ban
 import dev.kord.core.behavior.edit
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.rest.request.auditLogReason
 import io.github.maheevil.modbot.extensions.moderation.logging.createModLog
 import io.github.maheevil.modbot.modLogsChannelID
 import kotlinx.datetime.Clock
@@ -43,9 +44,11 @@ suspend fun kickUserWithLog(meessage: Message?, guild: GuildBehavior, moderator:
 
 suspend fun timeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, duration: Duration, reason: String?){
     guild.getMember(target).edit {
+        this.reason = reason
         timeoutUntil =  Clock.System.now() + duration
     }
     meessage?.respond(
             "timedout ${guild.kord.getUser(target)?.mention},Duration = $duration, Reason given : $reason"
     )
+    createModLog(guild.getChannel(modLogsChannelID) as GuildMessageChannel,"timedout",moderator.id,target,reason, Color(0xd9d904),duration)
 }
