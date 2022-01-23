@@ -13,7 +13,6 @@ import io.github.maheevil.modbot.modLogsChannelID
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.Clock
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 @OptIn(kotlin.time.ExperimentalTime::class)

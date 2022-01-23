@@ -2,17 +2,12 @@ package io.github.maheevil.modbot.extensions.moderation.util
 
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.converters.impl.coalescingDefaultingString
-import com.kotlindiscord.kord.extensions.commands.converters.impl.coalescingOptionalDuration
 import com.kotlindiscord.kord.extensions.commands.converters.impl.snowflake
 import com.kotlindiscord.kord.extensions.commands.converters.impl.string
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.chatCommand
 import com.kotlindiscord.kord.extensions.utils.respond
-import com.kotlindiscord.kord.extensions.utils.timeoutUntil
 import dev.kord.common.entity.Permission
-import dev.kord.core.behavior.edit
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlin.time.Duration
 
 class ModerationCommands : Extension() {

@@ -4,15 +4,12 @@ import com.kotlindiscord.kord.extensions.time.TimestampType
 import com.kotlindiscord.kord.extensions.time.toDiscord
 import dev.kord.common.Color
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.createEmbed
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
 import io.github.maheevil.modbot.util.durationToHuman
 import kotlinx.datetime.Clock
-import kotlinx.datetime.toDateTimePeriod
 import kotlin.time.Duration
-import kotlin.time.TimeMark
 
 /** Reference for future me (color codes)
  * kicked - 0xff5e00
