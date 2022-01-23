@@ -52,3 +52,14 @@ suspend fun timeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moderat
     )
     createModLog(guild.getChannel(modLogsChannelID) as GuildMessageChannel,"timedout",moderator.id,target,reason, Color(0xd9d904),duration)
 }
+
+suspend fun untimeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, reason: String?){
+    guild.getMember(target).edit {
+        this.reason = reason
+        timeoutUntil = null
+    }
+    meessage?.respond(
+            "untimedout ${guild.kord.getUser(target)?.mention}, Reason given : $reason"
+    )
+    createModLog(guild.getChannel(modLogsChannelID) as GuildMessageChannel,"timeoutn't",moderator.id,target,reason, Color(0x55ff00))
+}

@@ -78,7 +78,7 @@ class ModerationCommands : Extension() {
 
         chatCommand(::DuratedModCommandArgs) {
             name = "timeout"
-            description = "Kicks the user."
+            description = "timeouts the user."
             requiredPerms.add(Permission.KickMembers)
 
             action {
@@ -94,6 +94,23 @@ class ModerationCommands : Extension() {
             }
         }
 
+        chatCommand(::ModCommandArgs) {
+            name = "untimeout"
+            description = "untimeouts the user."
+            requiredPerms.add(Permission.KickMembers)
+
+            action {
+                if (user == null || guild == null)
+                    return@action
+
+                if(guild?.getMemberOrNull(arguments.target) == null){
+                    message.respond("The user is not in this Guild/Server")
+                    return@action
+                }
+
+                untimeoutUserWithLog(message,guild!!,user!!,arguments.target,arguments.reason)
+            }
+        }
     }
     inner class ModCommandArgs : Arguments() {
         val target by snowflake{
