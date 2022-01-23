@@ -33,6 +33,7 @@ dependencies {
 
     // Logging dependencies
     implementation(libs.groovy)
+    implementation(libs.jansi)
     implementation(libs.logback)
     implementation(libs.logging)
 }
@@ -52,7 +53,7 @@ tasks.withType<KotlinCompile> {
 tasks.jar {
     manifest {
         attributes(
-            "Main-Class" to "io.github.maheevil.modbot.AppKt"
+                "Main-Class" to "io.github.maheevil.modbot.AppKt"
         )
     }
 }
@@ -62,8 +63,3 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
-
-/*detekt {
-    buildUponDefaultConfig = true
-    //config = rootProject.files("detekt.yml")
-}*/

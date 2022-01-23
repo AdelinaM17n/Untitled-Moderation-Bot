@@ -1,7 +1,7 @@
 package io.github.maheevil.modbot.extensions.moderation.util
 
 import com.kotlindiscord.kord.extensions.commands.Arguments
-import com.kotlindiscord.kord.extensions.commands.converters.impl.defaultingCoalescingString
+import com.kotlindiscord.kord.extensions.commands.converters.impl.coalescingDefaultingString
 import com.kotlindiscord.kord.extensions.commands.converters.impl.snowflake
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.chatCommand
@@ -70,13 +70,16 @@ class ModerationCommands : Extension() {
         }
     }
     inner class ModCommandArgs : Arguments() {
-        val target by snowflake("target", description = "Person you want to ban/kick/unban")
+        val target by snowflake{
+            name = "target"
+            description = "Person you want to ban/kick/unban"
+        }
 
-        val reason by defaultingCoalescingString(
-                "reason",
-                description = "Reason fo the action",
+        val reason by coalescingDefaultingString{
+                name = "reason"
+                description = "Reason fo the action"
                 defaultValue = "No reason given"
-        )
+        }
     }
 
 }
