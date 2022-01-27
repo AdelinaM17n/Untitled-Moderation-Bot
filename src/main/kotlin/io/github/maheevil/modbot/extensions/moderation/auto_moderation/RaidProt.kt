@@ -19,7 +19,9 @@ class RaidProt : Extension() {
 
                 if(event.message.mentionedUserIds.count() > 20 ){
                     event.message.delete()
+
                     val kickReason = "Anti-Raid: More than 20 users pinged in one message"
+
                     kickUserWithLog(null,event.getGuild()!!,event.kord.getSelf(),event.message.author!!.id,kickReason)
                     createAlertLog(event.getGuild()!!.getChannel(alertLogsChannelID) as GuildMessageChannel,event.message.author!!,event.message.content, "Auto-Anti-Raid Alert")
                 }

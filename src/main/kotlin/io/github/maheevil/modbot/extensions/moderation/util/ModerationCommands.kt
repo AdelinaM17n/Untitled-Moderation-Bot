@@ -2,8 +2,8 @@ package io.github.maheevil.modbot.extensions.moderation.util
 
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.converters.impl.coalescingDefaultingString
-import com.kotlindiscord.kord.extensions.commands.converters.impl.snowflake
 import com.kotlindiscord.kord.extensions.commands.converters.impl.string
+import com.kotlindiscord.kord.extensions.commands.converters.impl.user
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.chatCommand
 import com.kotlindiscord.kord.extensions.utils.respond
@@ -23,12 +23,12 @@ class ModerationCommands : Extension() {
                 if (user == null || guild == null)
                     return@action
 
-                if(guild?.getMemberOrNull(arguments.target)?.getPermissions()?.contains(Permission.BanMembers) == true){
+                if(guild?.getMemberOrNull(arguments.target.id)?.getPermissions()?.contains(Permission.BanMembers) == true){
                     message.respond("The bot cannot ban a other moderator/admin")
                     return@action
                 }
 
-                createBanWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
+                createBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
         }
 
@@ -41,12 +41,12 @@ class ModerationCommands : Extension() {
                 if (user == null || guild == null)
                     return@action
 
-               if(guild?.getBanOrNull(arguments.target) == null){
+               if(guild?.getBanOrNull(arguments.target.id) == null){
                     message.respond("The user is not banned")
                     return@action
                }
 
-                removeBanWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
+                removeBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
         }
 
@@ -59,33 +59,33 @@ class ModerationCommands : Extension() {
                 if (user == null || guild == null)
                     return@action
 
-               if(guild?.getMemberOrNull(arguments.target) == null){
+               if(guild?.getMemberOrNull(arguments.target.id) == null){
                     message.respond("The user is not in this Guild/Server")
                     return@action
-               }else if(guild?.getMember(arguments.target)?.getPermissions()?.contains(Permission.KickMembers) == true){
+               }else if(guild?.getMember(arguments.target.id)?.getPermissions()?.contains(Permission.KickMembers) == true){
                     message.respond("The bot cannot kick a other moderator/admin")
                     return@action
                }
 
-                kickUserWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
+                kickUserWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
         }
 
         chatCommand(::DuratedModCommandArgs) {
             name = "timeout"
             description = "timeouts the user."
-            requiredPerms.add(Permission.KickMembers)
+            requiredPerms.add(Permission.ModerateMembers)
 
             action {
                 if (user == null || guild == null)
                     return@action
 
-                if(guild?.getMemberOrNull(arguments.target) == null){
+                if(guild?.getMemberOrNull(arguments.target.id) == null){
                     message.respond("The user is not in this Guild/Server")
                     return@action
                 }
 
-                timeoutUserWithLog(message,guild!!,user!!,arguments.target,Duration.parse(arguments.duration),arguments.reason)
+                timeoutUserWithLog(message,guild!!,user!!,arguments.target.id,Duration.parse(arguments.duration),arguments.reason)
             }
         }
 
@@ -98,17 +98,17 @@ class ModerationCommands : Extension() {
                 if (user == null || guild == null)
                     return@action
 
-                if(guild?.getMemberOrNull(arguments.target) == null){
+                if(guild?.getMemberOrNull(arguments.target.id) == null){
                     message.respond("The user is not in this Guild/Server")
                     return@action
                 }
 
-                untimeoutUserWithLog(message,guild!!,user!!,arguments.target,arguments.reason)
+                untimeoutUserWithLog(message,guild!!,user!!,arguments.target.id,arguments.reason)
             }
         }
     }
     inner class ModCommandArgs : Arguments() {
-        val target by snowflake{
+        val target by user{
             name = "target"
             description = "Person you want to ban/kick/unban"
         }
@@ -121,7 +121,7 @@ class ModerationCommands : Extension() {
     }
 
     inner class DuratedModCommandArgs : Arguments() {
-        val target by snowflake {
+        val target by user {
             name = "target"
             description = "The target, what else did you expect?"
         }
