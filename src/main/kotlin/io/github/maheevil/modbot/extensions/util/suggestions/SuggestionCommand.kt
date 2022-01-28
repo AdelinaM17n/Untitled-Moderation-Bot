@@ -9,9 +9,15 @@ import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import com.kotlindiscord.kord.extensions.types.respond
 import com.kotlindiscord.kord.extensions.utils.addReaction
 import dev.kord.common.Color
+import dev.kord.common.entity.ChannelType
+import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
+import dev.kord.core.behavior.edit
 import dev.kord.core.entity.channel.TextChannel
-import dev.kord.rest.builder.message.create.embed
+import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.rest.builder.message.EmbedBuilder
+import dev.kord.rest.builder.message.modify.embed
 import io.github.maheevil.modbot.TEST_SERVER_ID
+import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
 
 
@@ -35,13 +41,7 @@ class SuggestionCommand : Extension() {
                     }
 
                     val messageID = respond {
-                        embed {
-                            title = arguments.title
-                            color = Color(0x09850b)
-                            field("Suggestion",false){arguments.suggestionString}
-                            field("votes",false){"0"}
-                            timestamp = Clock.System.now()
-                        }
+                        this.embeds.add(createSuggestionEmbed(arguments.title,arguments.suggestionString,Color(0x09850b)))
                     }.message.id
 
                     channel.getMessage(messageID).addReaction("\uD83D\uDC4D")
@@ -63,5 +63,17 @@ class SuggestionCommand : Extension() {
             description = "Title at the top of the embed"
             defaultValue = "Suggestion"
         }
+    }
+
+    private fun createSuggestionEmbed(title: String, suggestionString: String, colour: Color, response: String? = null) : EmbedBuilder {
+        val embed = EmbedBuilder()
+
+        embed.title = title
+        embed.color = colour
+        embed.field("Suggestion",false){suggestionString}
+        embed.field("votes",false){"0"}
+        embed.timestamp = Clock.System.now()
+
+        return embed
     }
 }
