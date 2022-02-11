@@ -24,7 +24,7 @@ class ModerationCommands : Extension() {
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild,message,arguments.target.id, Permission.BanMembers))
+                if(!verifyModCommand(guild,message,arguments.target.id,user!!.id, Permission.BanMembers))
                     return@action
                 createBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
@@ -39,7 +39,7 @@ class ModerationCommands : Extension() {
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild,message,arguments.target.id, Permission.BanMembers))
+                if(!verifyModCommand(guild,message,arguments.target.id,user!!.id, Permission.BanMembers))
                     return@action
                 removeBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
@@ -54,7 +54,7 @@ class ModerationCommands : Extension() {
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild,message,arguments.target.id, Permission.KickMembers))
+                if(!verifyModCommand(guild,message,arguments.target.id,user!!.id, Permission.KickMembers))
                     return@action
                 kickUserWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
@@ -69,7 +69,7 @@ class ModerationCommands : Extension() {
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild,message,arguments.target.id, Permission.ModerateMembers))
+                if(!verifyModCommand(guild,message,arguments.target.id,user!!.id, Permission.ModerateMembers))
                     return@action
                 timeoutUserWithLog(message,guild!!,user!!,arguments.target.id,Duration.parse(arguments.duration),arguments.reason)
             }
@@ -85,7 +85,7 @@ class ModerationCommands : Extension() {
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild,message,arguments.target.id, Permission.ModerateMembers))
+                if(!verifyModCommand(guild,message,arguments.target.id,user!!.id, Permission.ModerateMembers))
                     return@action
                 untimeoutUserWithLog(message, guild!!, user!!, arguments.target.id, arguments.reason)
             }

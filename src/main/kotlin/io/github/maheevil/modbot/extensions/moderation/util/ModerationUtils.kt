@@ -60,7 +60,7 @@ suspend fun untimeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moder
     createModLog(guild.getChannel(modLogsChannelID) as GuildMessageChannel,"timeoutn't",moderator.id,target,reason, Color(0x55ff00))
 }
 
-suspend fun verifyModCommand(guild: GuildBehavior?, message: Message, target: Snowflake, permission: Permission) : Boolean {
+suspend fun verifyModCommand(guild: GuildBehavior?, message: Message, target: Snowflake, user: Snowflake, permission: Permission) : Boolean {
     if(guild == null) return false
 
     val targetAsMember = guild.getMemberOrNull(target)
@@ -70,6 +70,9 @@ suspend fun verifyModCommand(guild: GuildBehavior?, message: Message, target: Sn
         return false
     }else if (targetAsMember.hasPermission(permission)) {
         message.respond("That user is a moderator")
+        return false
+    }else if(user == target){
+        message.respond("Don't execute a moderation command on yourself")
         return false
     }
 
