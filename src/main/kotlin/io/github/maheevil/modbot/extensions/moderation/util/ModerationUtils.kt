@@ -1,13 +1,12 @@
 package io.github.maheevil.modbot.extensions.moderation.util
 
+import com.kotlindiscord.kord.extensions.utils.hasPermission
 import com.kotlindiscord.kord.extensions.utils.respond
 import com.kotlindiscord.kord.extensions.utils.timeoutUntil
 import dev.kord.common.Color
+import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.UserBehavior
-import dev.kord.core.behavior.ban
-import dev.kord.core.behavior.edit
+import dev.kord.core.behavior.*
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.GuildMessageChannel
 import io.github.maheevil.modbot.extensions.moderation.logging.createModLog
@@ -59,4 +58,20 @@ suspend fun untimeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moder
             "untimedout ${guild.kord.getUser(target)?.mention}, Reason given : $reason"
     )
     createModLog(guild.getChannel(modLogsChannelID) as GuildMessageChannel,"timeoutn't",moderator.id,target,reason, Color(0x55ff00))
+}
+
+suspend fun verifyModCommand(guild: GuildBehavior?, message: Message, target: Snowflake, permission: Permission) : Boolean {
+    if(guild == null) return false
+
+    val targetAsMember = guild.getMemberOrNull(target)
+
+    if (targetAsMember == null) {
+        message.respond("The user is not in this Guild/Server")
+        return false
+    }else if (targetAsMember.hasPermission(permission)) {
+        message.respond("That user is a moderator")
+        return false
+    }
+
+    return true
 }

@@ -9,15 +9,9 @@ import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import com.kotlindiscord.kord.extensions.types.respond
 import com.kotlindiscord.kord.extensions.utils.addReaction
 import dev.kord.common.Color
-import dev.kord.common.entity.ChannelType
-import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
-import dev.kord.core.behavior.edit
 import dev.kord.core.entity.channel.TextChannel
-import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.builder.message.modify.embed
 import io.github.maheevil.modbot.TEST_SERVER_ID
-import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
 
 

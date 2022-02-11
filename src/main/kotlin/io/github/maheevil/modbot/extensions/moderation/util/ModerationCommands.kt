@@ -1,12 +1,13 @@
 package io.github.maheevil.modbot.extensions.moderation.util
 
+import com.kotlindiscord.kord.extensions.checks.hasPermission
+import com.kotlindiscord.kord.extensions.checks.isNotBot
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.converters.impl.coalescingDefaultingString
 import com.kotlindiscord.kord.extensions.commands.converters.impl.string
 import com.kotlindiscord.kord.extensions.commands.converters.impl.user
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.chatCommand
-import com.kotlindiscord.kord.extensions.utils.respond
 import dev.kord.common.entity.Permission
 import kotlin.time.Duration
 
@@ -19,15 +20,12 @@ class ModerationCommands : Extension() {
             description = "Bans the user."
             requiredPerms.add(Permission.BanMembers)
 
+            check { hasPermission(Permission.BanMembers) }
+            check { isNotBot() }
+
             action {
-                if (user == null || guild == null)
+                if(!verifyModCommand(guild,message,arguments.target.id, Permission.BanMembers))
                     return@action
-
-                if(guild?.getMemberOrNull(arguments.target.id)?.getPermissions()?.contains(Permission.BanMembers) == true){
-                    message.respond("The bot cannot ban a other moderator/admin")
-                    return@action
-                }
-
                 createBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
         }
@@ -37,15 +35,12 @@ class ModerationCommands : Extension() {
             description = "Unbans the user."
             requiredPerms.add(Permission.BanMembers)
 
+            check { hasPermission(Permission.BanMembers) }
+            check { isNotBot() }
+
             action {
-                if (user == null || guild == null)
+                if(!verifyModCommand(guild,message,arguments.target.id, Permission.BanMembers))
                     return@action
-
-               if(guild?.getBanOrNull(arguments.target.id) == null){
-                    message.respond("The user is not banned")
-                    return@action
-               }
-
                 removeBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
         }
@@ -55,18 +50,12 @@ class ModerationCommands : Extension() {
             description = "Kicks the user."
             requiredPerms.add(Permission.KickMembers)
 
+            check { hasPermission(Permission.KickMembers) }
+            check { isNotBot() }
+
             action {
-                if (user == null || guild == null)
+                if(!verifyModCommand(guild,message,arguments.target.id, Permission.KickMembers))
                     return@action
-
-               if(guild?.getMemberOrNull(arguments.target.id) == null){
-                    message.respond("The user is not in this Guild/Server")
-                    return@action
-               }else if(guild?.getMember(arguments.target.id)?.getPermissions()?.contains(Permission.KickMembers) == true){
-                    message.respond("The bot cannot kick a other moderator/admin")
-                    return@action
-               }
-
                 kickUserWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
         }
@@ -76,15 +65,12 @@ class ModerationCommands : Extension() {
             description = "timeouts the user."
             requiredPerms.add(Permission.ModerateMembers)
 
+            check { hasPermission(Permission.ModerateMembers) }
+            check { isNotBot() }
+
             action {
-                if (user == null || guild == null)
+                if(!verifyModCommand(guild,message,arguments.target.id, Permission.ModerateMembers))
                     return@action
-
-                if(guild?.getMemberOrNull(arguments.target.id) == null){
-                    message.respond("The user is not in this Guild/Server")
-                    return@action
-                }
-
                 timeoutUserWithLog(message,guild!!,user!!,arguments.target.id,Duration.parse(arguments.duration),arguments.reason)
             }
         }
@@ -92,18 +78,16 @@ class ModerationCommands : Extension() {
         chatCommand(::ModCommandArgs) {
             name = "untimeout"
             description = "untimeouts the user."
-            requiredPerms.add(Permission.KickMembers)
+            requiredPerms.add(Permission.ModerateMembers)
+
+            // I do not have much confidence in check honestly
+            check { hasPermission(Permission.ModerateMembers) }
+            check { isNotBot() }
 
             action {
-                if (user == null || guild == null)
+                if(!verifyModCommand(guild,message,arguments.target.id, Permission.ModerateMembers))
                     return@action
-
-                if(guild?.getMemberOrNull(arguments.target.id) == null){
-                    message.respond("The user is not in this Guild/Server")
-                    return@action
-                }
-
-                untimeoutUserWithLog(message,guild!!,user!!,arguments.target.id,arguments.reason)
+                untimeoutUserWithLog(message, guild!!, user!!, arguments.target.id, arguments.reason)
             }
         }
     }

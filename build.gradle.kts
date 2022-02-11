@@ -16,7 +16,13 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     // You can remove this if you're not testing locally-installed KordEx builds
-    mavenLocal()
+    google()
+    mavenCentral()
+
+    maven {
+        name = "Sonatype Snapshots"
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+    }
 
     maven {
         name = "Kotlin Discord"
