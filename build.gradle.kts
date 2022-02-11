@@ -16,7 +16,13 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     // You can remove this if you're not testing locally-installed KordEx builds
-    mavenLocal()
+    google()
+    mavenCentral()
+
+    maven {
+        name = "Sonatype Snapshots"
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+    }
 
     maven {
         name = "Kotlin Discord"
@@ -33,6 +39,7 @@ dependencies {
 
     // Logging dependencies
     implementation(libs.groovy)
+    implementation(libs.jansi)
     implementation(libs.logback)
     implementation(libs.logging)
 }
@@ -52,7 +59,7 @@ tasks.withType<KotlinCompile> {
 tasks.jar {
     manifest {
         attributes(
-            "Main-Class" to "io.github.maheevil.modbot.AppKt"
+                "Main-Class" to "io.github.maheevil.modbot.AppKt"
         )
     }
 }
@@ -62,8 +69,3 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
-
-/*detekt {
-    buildUponDefaultConfig = true
-    //config = rootProject.files("detekt.yml")
-}*/

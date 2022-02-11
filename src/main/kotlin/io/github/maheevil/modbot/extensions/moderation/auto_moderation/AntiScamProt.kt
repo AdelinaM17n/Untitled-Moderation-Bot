@@ -34,7 +34,9 @@ class AntiScamProt : Extension() {
 
                 if (mentionsEveryoneOrHere && urlPattern.matcher(message.content).find()){
                     message.delete()
+
                     val kickReason = "Anti-Scam: Sending a message that mentions @here or @everyone with a link"
+
                     kickUserWithLog(null,event.getGuild()!!,event.kord.getSelf(),message.author!!.id,kickReason)
                     createAlertLog(event.getGuild()!!.getChannel(alertLogsChannelID) as GuildMessageChannel,message.author!!,message.content, "Auto-Anti-Scam Alert")
                 }

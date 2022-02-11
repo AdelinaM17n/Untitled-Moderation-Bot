@@ -1,12 +1,15 @@
 package io.github.maheevil.modbot.extensions.moderation.logging
 
+import com.kotlindiscord.kord.extensions.time.TimestampType
+import com.kotlindiscord.kord.extensions.time.toDiscord
 import dev.kord.common.Color
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.createEmbed
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
+import io.github.maheevil.modbot.util.durationToHuman
 import kotlinx.datetime.Clock
+import kotlin.time.Duration
 
 /** Reference for future me (color codes)
  * kicked - 0xff5e00
@@ -15,7 +18,7 @@ import kotlinx.datetime.Clock
  * unmuted - 0x55ff00
  */
 
-suspend fun createModLog(channel: GuildMessageChannel, modAction: String, moderator: Snowflake, target: Snowflake, reason: String?, colour: Color){
+suspend fun createModLog(channel: GuildMessageChannel, modAction: String, moderator: Snowflake, target: Snowflake, reason: String?, colour: Color, duration: Duration? = null){
     val targetUser: User? = channel.kord.getUser(target)
     val targetUserNameWithDiscrim = "${targetUser?.username ?: "Deleted User"}#${targetUser?.discriminator ?: "0000"}"
 
@@ -24,6 +27,10 @@ suspend fun createModLog(channel: GuildMessageChannel, modAction: String, modera
         color = colour
         field("User",false){"<@${target.value}> `$targetUserNameWithDiscrim`"}
         field("Reason",false) {"`${reason ?: "No reason given"}`"}
+        if(duration != null) {
+            field("Duration", true){durationToHuman(duration)}
+            field("Until",true){(Clock.System.now() + duration).toDiscord(TimestampType.ShortDateTime)}
+        }
         field("Moderator",false){"${channel.getGuild().getMemberOrNull(moderator)?.mention ?: moderator.value}"}
         timestamp = Clock.System.now()
     }
