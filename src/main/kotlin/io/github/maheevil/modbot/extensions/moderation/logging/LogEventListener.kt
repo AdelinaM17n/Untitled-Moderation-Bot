@@ -43,11 +43,12 @@ class LogEventListener : Extension() {
             }
         }
 
+        // There is no event for kicks so this is used for both leave and kick logs
         event<MemberLeaveEvent> {
             action{
                 val kick = event.guild.getAuditLogEntries { AuditLogEvent.MemberKick }
                         .filter { it.targetId == event.user.id && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60}.firstOrNull()
-
+                // Banning a user also creates an invisible kick audit log entry so there is a check to see if the user is banned
                 if(kick?.targetId != null && kick.userId != kick.kord.selfId && event.guild.getBanOrNull(kick.targetId!!) == null){
                     createModLog(event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,"kicked",kick.userId,kick.targetId!!,kick.reason, Color(0xff5e00))
                 }
@@ -62,20 +63,24 @@ class LogEventListener : Extension() {
             }
         }
 
+        // Listening the member update event to log timeout related things. This does NOT log timeouts running out.
         event<MemberUpdateEvent> {
             action {
                 if(event.old?.timeoutUntil == event.member.timeoutUntil) return@action
 
                 val auditEntry = event.guild.getAuditLogEntries { AuditLogEvent.MemberUpdate }
                         .filter { it.targetId == event.member.id &&  Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60 }.firstOrNull()
-
                 if(auditEntry?.userId == auditEntry?.kord?.selfId || auditEntry?.targetId == null) return@action
 
                 val isTimedouted = event.member.timeoutUntil != null
                 createModLog(
                         event.guild.getChannel(modLogsChannelID) as GuildMessageChannel,
-                        if(isTimedouted) "timedout" else "timedoutn't", auditEntry.userId, auditEntry.targetId!!, auditEntry.reason, Color(0x09850b),
-                        if(isTimedouted) event.member.timeoutUntil!!.minus(Clock.System.now()).plus(1.minutes) else null
+                        if(isTimedouted) "timedout" else "timedoutn't",
+                        auditEntry.userId,
+                        auditEntry.targetId!!,
+                        auditEntry.reason,
+                        Color(0x09850b),
+                        if(isTimedouted) event.member.timeoutUntil!!.minus(Clock.System.now()).plus(1.minutes) else null //One minute added so logs will get the proper time. This does mean "until" will be not correct.
                 )
             }
         }

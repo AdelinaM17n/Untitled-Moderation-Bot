@@ -16,7 +16,7 @@ import kotlinx.datetime.Clock
 
 
 class SuggestionCommand : Extension() {
-    override val name = "suggestion";
+    override val name = "suggestion"
 
     override suspend fun setup() {
         publicSlashCommand {
@@ -61,13 +61,11 @@ class SuggestionCommand : Extension() {
 
     private fun createSuggestionEmbed(title: String, suggestionString: String, colour: Color, response: String? = null) : EmbedBuilder {
         val embed = EmbedBuilder()
-
         embed.title = title
         embed.color = colour
         embed.field("Suggestion",false){suggestionString}
         embed.field("votes",false){"0"}
         embed.timestamp = Clock.System.now()
-
         return embed
     }
 }

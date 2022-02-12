@@ -23,13 +23,13 @@ class MiscCommands : Extension(){
             action{
                 //Removed the guild check because this is a guild only slash command
                 respond {
-                    content = getInvite(channel.fetchChannel() as TextChannel, guild!!)
+                    content = getInviteLink(channel.fetchChannel() as TextChannel, guild!!)
                 }
             }
         }
     }
 
-    suspend fun getInvite(channel: TextChannel, guild: GuildBehavior) : String{
+    suspend fun getInviteLink(channel: TextChannel, guild: GuildBehavior) : String{
         return "https://discord.gg/" +
                 if(inviteCode == "NULL") {
                     if(channel.invites.firstOrNull() != null)

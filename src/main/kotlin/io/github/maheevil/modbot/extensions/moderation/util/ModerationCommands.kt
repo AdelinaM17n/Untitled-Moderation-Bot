@@ -80,7 +80,6 @@ class ModerationCommands : Extension() {
             description = "untimeouts the user."
             requiredPerms.add(Permission.ModerateMembers)
 
-            // I do not have much confidence in check honestly
             check { hasPermission(Permission.ModerateMembers) }
             check { isNotBot() }
 
