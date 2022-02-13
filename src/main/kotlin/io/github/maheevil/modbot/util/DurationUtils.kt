@@ -6,9 +6,9 @@ fun durationToHuman(duration: Duration) : String{
     val minutes = duration.inWholeMinutes % 60 ; val hours = duration.inWholeHours % 24 ; val days = duration.inWholeDays
 
     return duration.toString()
-            .replace("d", if(days > 1) " days " else " day ")
-            .replace("h",if(hours > 1) " hours " else " hour ")
-            .replace("m",if(minutes > 1)" minutes " else " minute ")
+            .replace("d", if(days.toInt() == 1) " day" else " days")
+            .replace("h", if(hours.toInt() == 1) " hour" else " hours")
+            .replace("m", if(minutes.toInt() == 1) " minute" else " minutes")
 }
 
 /*

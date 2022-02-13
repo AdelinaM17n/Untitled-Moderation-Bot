@@ -6,16 +6,13 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 
-    //id("com.github.jakemarsden.git-hooks")
     id("com.github.johnrengelman.shadow")
-    //id("io.gitlab.arturbosch.detekt")
 }
 
 group = "io.github.maheevil.modbot"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    // You can remove this if you're not testing locally-installed KordEx builds
     google()
     mavenCentral()
 
@@ -31,7 +28,6 @@ repositories {
 }
 
 dependencies {
-    //detektPlugins(libs.detekt)
 
     implementation(libs.kord.extensions)
     implementation(libs.kotlin.stdlib)
