@@ -32,12 +32,8 @@ private val TOKEN = env("TOKEN")
 suspend fun main() {
     val bot = ExtensibleBot(TOKEN) {
         chatCommands {
-            defaultPrefix = "?"
+            defaultPrefix = "!"
             enabled = true
-
-            prefix { default ->
-                if (guildId == TEST_SERVER_ID) "!" else default
-            }
         }
         extensions {
             add(::AntiScamProt)
@@ -48,15 +44,13 @@ suspend fun main() {
             add(::MiscCommands)
 
             // KordEx extra modules
-            extMappings {}
-            extPhishing {
-                appName = "Untitled-Moderation-Bot"
-            }
+            //extMappings {}
+            //extPhishing { appName = "Untitled-Moderation-Bot" }
         }
     }
 
     //guildConfigDataMap[TEST_SERVER_ID.toLong()] = GuildConfigData(joinLeaveLogChannelID, alertLogsChannelID, modLogsChannelID, inviteCode )
     deserializeAndLoadFromJson()
-    serializeAndSaveToJson()
+    //serializeAndSaveToJson()
     bot.start()
 }

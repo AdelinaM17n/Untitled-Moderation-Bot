@@ -21,13 +21,12 @@ fun deserializeAndLoadFromJson(){
 fun serializeAndSaveToJson(){
     val serializedJson = Json.encodeToString(guildConfigDataMap)
     val path = Paths.get("").toAbsolutePath().toString().plus("/config/config.json")
-    println(path)
     val fileWriter = FileWriter(path)
     fileWriter.write(serializedJson)
     fileWriter.close()
 }
 
-fun putToHashMap(guildId: Long ,joinLeaveLogsChannel: Snowflake?, alertLogsChannel: Snowflake?, modLogsChannel: Snowflake?, invite: String?){
-    guildConfigDataMap[guildId] = GuildConfigData(joinLeaveLogsChannel, alertLogsChannel, modLogsChannel, invite)
+fun putToHashMap(guildId: Long ,guildConfigData: GuildConfigData){
+    guildConfigDataMap[guildId] = guildConfigData
     serializeAndSaveToJson()
 }
