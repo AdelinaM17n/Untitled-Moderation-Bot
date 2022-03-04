@@ -6,9 +6,6 @@
 - Anti-Raid - Deletes any message that pings more than 20 users individually(a common tactic used by raiders to pingspam when they can't use @everyone)   
 > *both Anti-Scam and Anti-Raid will also kick the user who send the message*
 
-#### Planned features.
-- Supporting multiple guilds on the same instance.
-
 ***This is a hobby project/something I make for my own discord. no stability or anything guaranteed***   
     
 ***This project is licensed under MPL-2.0 license***
