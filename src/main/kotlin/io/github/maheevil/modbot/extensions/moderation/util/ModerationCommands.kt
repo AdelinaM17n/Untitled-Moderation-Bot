@@ -8,6 +8,7 @@ import com.kotlindiscord.kord.extensions.commands.converters.impl.string
 import com.kotlindiscord.kord.extensions.commands.converters.impl.user
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.chatCommand
+import com.soywiz.korio.dynamic.KDynamic.Companion.toLong
 import dev.kord.common.entity.Permission
 import kotlin.time.Duration
 
@@ -54,7 +55,7 @@ class ModerationCommands : Extension() {
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild,message,arguments.target.id, Permission.KickMembers))
+                if(!verifyModCommand(guild,message,arguments.target.id, Permission.KickMembers, true))
                     return@action
                 kickUserWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
@@ -69,7 +70,7 @@ class ModerationCommands : Extension() {
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild,message,arguments.target.id, Permission.ModerateMembers))
+                if(!verifyModCommand(guild,message,arguments.target.id, Permission.ModerateMembers,true))
                     return@action
                 timeoutUserWithLog(message,guild!!,user!!,arguments.target.id,Duration.parse(arguments.duration),arguments.reason)
             }
@@ -84,7 +85,7 @@ class ModerationCommands : Extension() {
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild,message,arguments.target.id, Permission.ModerateMembers))
+                if(!verifyModCommand(guild,message,arguments.target.id, Permission.ModerateMembers,true))
                     return@action
                 untimeoutUserWithLog(message, guild!!, user!!, arguments.target.id, arguments.reason)
             }

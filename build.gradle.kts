@@ -25,13 +25,37 @@ repositories {
         name = "Kotlin Discord"
         url = uri("https://maven.kotlindiscord.com/repository/maven-public/")
     }
+
+    maven {
+        name = "Fabric"
+        url = uri("https://maven.fabricmc.net/")
+    }
+
+    maven {
+        name = "QuiltMC (Releases)"
+        url = uri("https://maven.quiltmc.org/repository/release/")
+    }
+
+    maven {
+        name = "QuiltMC (Snapshots)"
+        url = uri("https://maven.quiltmc.org/repository/snapshot/")
+    }
+
+    maven {
+        name = "JitPack"
+        url = uri("https://jitpack.io")
+    }
 }
 
 dependencies {
 
     implementation(libs.kord.extensions)
+    implementation(libs.kord.phishing)
+    implementation(libs.kord.mappings)
+
     implementation(libs.kotlin.stdlib)
     implementation(libs.kx.ser)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
     // Logging dependencies
     implementation(libs.groovy)

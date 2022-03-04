@@ -110,3 +110,7 @@ build/
 
 # Env vars - don't commit this!
 .env
+
+#other stuff
+.linkie-cache
+config/config.json
