@@ -1,10 +1,11 @@
 package io.github.maheevil.modbot
 
 import com.kotlindiscord.kord.extensions.ExtensibleBot
+import com.kotlindiscord.kord.extensions.modules.extra.mappings.extMappings
+import com.kotlindiscord.kord.extensions.modules.extra.phishing.extPhishing
 import com.kotlindiscord.kord.extensions.utils.env
 import com.soywiz.korio.dynamic.KDynamic.Companion.toLong
 import dev.kord.common.entity.Snowflake
-import io.github.maheevil.modbot.extensions.moderation.auto_moderation.AntiScamProt
 import io.github.maheevil.modbot.extensions.moderation.auto_moderation.RaidProt
 import io.github.maheevil.modbot.extensions.moderation.logging.LogEventListener
 import io.github.maheevil.modbot.extensions.moderation.util.ModerationCommands
@@ -25,7 +26,6 @@ suspend fun main() {
             enabled = true
         }
         extensions {
-            add(::AntiScamProt)
             add(::ModerationCommands)
             add(::RaidProt)
             add(::LogEventListener)
@@ -33,8 +33,8 @@ suspend fun main() {
             add(::MiscCommands)
 
             // KordEx extra modules
-            //extMappings {}
-            //extPhishing { appName = "Untitled-Moderation-Bot" }
+            extMappings {}
+            extPhishing { appName = "Untitled-Moderation-Bot" }
         }
     }
 

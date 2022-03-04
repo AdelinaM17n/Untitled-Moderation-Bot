@@ -8,7 +8,6 @@ import com.kotlindiscord.kord.extensions.commands.converters.impl.string
 import com.kotlindiscord.kord.extensions.commands.converters.impl.user
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.chatCommand
-import com.soywiz.korio.dynamic.KDynamic.Companion.toLong
 import dev.kord.common.entity.Permission
 import kotlin.time.Duration
 
@@ -34,7 +33,7 @@ class ModerationCommands : Extension() {
         chatCommand(::ModCommandArgs) {
             name = "unban"
             description = "Unbans the user."
-            requiredPerms.add(Permission.BanMembers)
+            //requiredPerms.add(Permission.BanMembers)
 
             check { hasPermission(Permission.BanMembers) }
             check { isNotBot() }
