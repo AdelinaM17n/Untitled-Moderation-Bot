@@ -42,12 +42,12 @@ class MiscCommands : Extension(){
         publicSlashCommand {
             name = "config"
             description = "Allows changing the config for the server"
-            guild(Snowflake(908667328533774338))
+            guild(TEST_SERVER_ID)
 
             publicSubCommand(::ConfigSetArgs){
                 name = "set"
                 description = "Set config values"
-                guild(Snowflake(908667328533774338))
+                guild(TEST_SERVER_ID)
 
                 action {
                     if (guild == null){
@@ -78,7 +78,7 @@ class MiscCommands : Extension(){
             publicSubCommand(::ConfigRemoveArgs){
                 name = "remove"
                 description = "Set config values"
-                guild(Snowflake(908667328533774338))
+                guild(TEST_SERVER_ID)
 
                 action {
                     if (guild == null) {
