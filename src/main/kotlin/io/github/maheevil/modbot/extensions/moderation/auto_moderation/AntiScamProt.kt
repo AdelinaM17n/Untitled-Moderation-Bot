@@ -2,12 +2,13 @@ package io.github.maheevil.modbot.extensions.moderation.auto_moderation
 
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.event
+import com.soywiz.korio.dynamic.KDynamic.Companion.toLong
 import dev.kord.common.entity.Permission
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.message.MessageCreateEvent
-import io.github.maheevil.modbot.alertLogsChannelID
 import io.github.maheevil.modbot.extensions.moderation.logging.createAlertLog
 import io.github.maheevil.modbot.extensions.moderation.util.kickUserWithLog
+import io.github.maheevil.modbot.guildConfigDataMap
 import java.util.regex.Pattern
 
 class AntiScamProt : Extension() {
@@ -38,7 +39,10 @@ class AntiScamProt : Extension() {
                     val kickReason = "Anti-Scam: Sending a message that mentions @here or @everyone with a link"
 
                     kickUserWithLog(null,event.getGuild()!!,event.kord.getSelf(),message.author!!.id,kickReason)
-                    createAlertLog(event.getGuild()!!.getChannel(alertLogsChannelID) as GuildMessageChannel,message.author!!,message.content, "Auto-Anti-Scam Alert")
+                    createAlertLog(
+                            event.getGuild()!!.getChannel(guildConfigDataMap[event.getGuild()!!.id.toLong()]?.modLogsChannel ?: return@action) as GuildMessageChannel,
+                            message.author!!,message.content, "Auto-Anti-Scam Alert"
+                    )
                 }
             }
         }
