@@ -16,7 +16,7 @@ import io.github.maheevil.modbot.util.config.deserializeAndLoadFromJson
 
 var guildConfigDataMap = HashMap<Long,GuildConfigData>()
 
-val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong())
+//val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong())
 private val TOKEN = env("TOKEN")
 
 suspend fun main() {
@@ -38,8 +38,6 @@ suspend fun main() {
         }
     }
 
-    //guildConfigDataMap[TEST_SERVER_ID.toLong()] = GuildConfigData(joinLeaveLogChannelID, alertLogsChannelID, modLogsChannelID, inviteCode )
     deserializeAndLoadFromJson()
-    //serializeAndSaveToJson()
     bot.start()
 }

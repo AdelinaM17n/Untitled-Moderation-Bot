@@ -11,7 +11,6 @@ import com.kotlindiscord.kord.extensions.utils.addReaction
 import dev.kord.common.Color
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.rest.builder.message.EmbedBuilder
-import io.github.maheevil.modbot.TEST_SERVER_ID
 import kotlinx.datetime.Clock
 
 
@@ -22,7 +21,7 @@ class SuggestionCommand : Extension() {
         publicSlashCommand {
             name = "suggestion"
             description = "suggestion related commands"
-            guild(TEST_SERVER_ID)
+            //guild(TEST_SERVER_ID)
 
             publicSubCommand(::CreateSubCommandArgs){
                 name = "create"

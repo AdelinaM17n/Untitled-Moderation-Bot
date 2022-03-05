@@ -12,7 +12,6 @@ import com.soywiz.korio.dynamic.KDynamic.Companion.toLong
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.createInvite
-import io.github.maheevil.modbot.TEST_SERVER_ID
 import io.github.maheevil.modbot.guildConfigDataMap
 import io.github.maheevil.modbot.util.config.GuildConfigData
 import io.github.maheevil.modbot.util.config.putToHashMap
@@ -25,7 +24,7 @@ class MiscCommands : Extension(){
         publicSlashCommand {
             name = "invite"
             description = "provides a invite link to this server"
-            guild(TEST_SERVER_ID)
+            //guild(TEST_SERVER_ID)
 
             action{
                 //Removed the guild check because this is a guild only slash command
@@ -43,12 +42,12 @@ class MiscCommands : Extension(){
         publicSlashCommand {
             name = "config"
             description = "Allows changing the config for the server"
-            guild(TEST_SERVER_ID)
+            //guild(TEST_SERVER_ID)
 
             publicSubCommand(::ConfigSetArgs){
                 name = "set"
                 description = "Set config values"
-                guild(TEST_SERVER_ID)
+                //guild(TEST_SERVER_ID)
 
                 action {
                     if (guild == null){
@@ -79,7 +78,7 @@ class MiscCommands : Extension(){
             publicSubCommand(::ConfigRemoveArgs){
                 name = "remove"
                 description = "Remove config values, by default it clears all configs."
-                guild(TEST_SERVER_ID)
+                //guild(TEST_SERVER_ID)
 
                 action {
                     if (guild == null) {
