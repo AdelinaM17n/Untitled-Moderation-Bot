@@ -21,7 +21,6 @@ class SuggestionCommand : Extension() {
         publicSlashCommand {
             name = "suggestion"
             description = "suggestion related commands"
-            //guild(TEST_SERVER_ID)
 
             publicSubCommand(::CreateSubCommandArgs){
                 name = "create"

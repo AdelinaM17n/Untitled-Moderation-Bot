@@ -24,7 +24,6 @@ class MiscCommands : Extension(){
         publicSlashCommand {
             name = "invite"
             description = "provides a invite link to this server"
-            //guild(TEST_SERVER_ID)
 
             action{
                 //Removed the guild check because this is a guild only slash command
@@ -42,12 +41,10 @@ class MiscCommands : Extension(){
         publicSlashCommand {
             name = "config"
             description = "Allows changing the config for the server"
-            //guild(TEST_SERVER_ID)
 
             publicSubCommand(::ConfigSetArgs){
                 name = "set"
                 description = "Set config values"
-                //guild(TEST_SERVER_ID)
 
                 action {
                     if (guild == null){
@@ -78,7 +75,6 @@ class MiscCommands : Extension(){
             publicSubCommand(::ConfigRemoveArgs){
                 name = "remove"
                 description = "Remove config values, by default it clears all configs."
-                //guild(TEST_SERVER_ID)
 
                 action {
                     if (guild == null) {

@@ -25,6 +25,9 @@ suspend fun main() {
             defaultPrefix = "!"
             enabled = true
         }
+        applicationCommands {
+            enabled = true
+        }
         extensions {
             add(::ModerationCommands)
             add(::RaidProt)
