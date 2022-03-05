@@ -24,19 +24,19 @@ class LogEventListener : Extension() {
         event<BanAddEvent> {
             action{
                 val modLogsSnowflake: Snowflake = guildConfigDataMap[event.guild.id.toLong()]?.modLogsChannel ?: return@action
-
-                val ban = event.guild.getAuditLogEntries { AuditLogEvent.MemberBanAdd }
-                        .filter {it.targetId == event.getBan().userId && it.reason == event.getBan().reason
+                val ban = event.getBan()
+                val auditLogEntry = event.guild.getAuditLogEntries { AuditLogEvent.MemberBanAdd }
+                        .filter {it.targetId == ban.userId && it.reason == ban.reason
                                 && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60}.firstOrNull()
 
-                if(ban?.targetId == null || ban.userId == ban.kord.selfId) return@action
+                if(auditLogEntry?.targetId == null || auditLogEntry.userId == auditLogEntry.kord.selfId) return@action
 
                 createModLog(
                     event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
                     "banned",
-                    kord.getUser(ban.userId),
-                    kord.getUser(ban.targetId!!),
-                    ban.reason,
+                    kord.getUser(auditLogEntry.userId),
+                    ban.getUser(),
+                    auditLogEntry.reason,
                     Color(0xff0000)
                 )
             }
@@ -45,18 +45,17 @@ class LogEventListener : Extension() {
         event<BanRemoveEvent> {
             action {
                 val modLogsSnowflake: Snowflake = guildConfigDataMap[event.guild.id.toLong()]?.modLogsChannel ?: return@action
-
-                val unban = event.guild.getAuditLogEntries { AuditLogEvent.MemberBanRemove }
+                val auditLogEntry = event.guild.getAuditLogEntries { AuditLogEvent.MemberBanRemove }
                         .filter {it.targetId == event.user.id && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60 }.firstOrNull()
 
-                if(unban?.targetId == null || unban.userId == unban.kord.selfId) return@action
+                if(auditLogEntry?.targetId == null || auditLogEntry.userId == auditLogEntry.kord.selfId) return@action
 
                 createModLog(
                     event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
                     "unbanned",
-                    kord.getUser(unban.userId),
-                    kord.getUser(unban.targetId!!),
-                    unban.reason,
+                    kord.getUser(auditLogEntry.userId),
+                    event.user,
+                    auditLogEntry.reason,
                     Color(0x09850b)
                 )
             }
@@ -67,16 +66,16 @@ class LogEventListener : Extension() {
             action{
                 val modLogsSnowflake: Snowflake? = guildConfigDataMap[event.guild.id.toLong()]?.modLogsChannel
                 if(modLogsSnowflake != null){
-                    val kick = event.guild.getAuditLogEntries { AuditLogEvent.MemberKick }
+                    val auditLogEntry = event.guild.getAuditLogEntries { AuditLogEvent.MemberKick }
                             .filter { it.targetId == event.user.id && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60}.firstOrNull()
                     // Banning a user also creates an invisible kick audit log entry so there is a check to see if the user is banned
-                    if(kick?.targetId != null && kick.userId != kick.kord.selfId && event.guild.getBanOrNull(kick.targetId!!) == null){
+                    if(auditLogEntry?.targetId != null && auditLogEntry.userId != auditLogEntry.kord.selfId && event.guild.getBanOrNull(auditLogEntry.targetId!!) == null){
                         createModLog(
                             event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
                             "kicked",
-                            kord.getUser(kick.userId),
-                            kord.getUser(kick.targetId!!),
-                            kick.reason,
+                            kord.getUser(auditLogEntry.userId),
+                            event.user,
+                            auditLogEntry.reason,
                             Color(0xff5e00)
                         )
                     }
@@ -95,7 +94,7 @@ class LogEventListener : Extension() {
                 createJoinLeaveLog(
                     event.guild.getChannel(guildConfigDataMap[event.guild.id.toLong()]?.joinLeaveLogsChannel ?: return@action) as GuildMessageChannel,
                     true,
-                    event.member.asUser()
+                    event.member
                 )
             }
         }
@@ -115,7 +114,8 @@ class LogEventListener : Extension() {
                 createModLog(
                     event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
                     if(isTimedouted) "timedout" else "timedoutn't",
-                    kord.getUser(auditEntry.userId), kord.getUser(auditEntry.targetId!!),
+                    kord.getUser(auditEntry.userId),
+                    event.member,
                     auditEntry.reason,
                     Color(0x09850b),
                     if(isTimedouted) event.member.timeoutUntil!!.minus(Clock.System.now()).plus(1.minutes) else null //One minute added so logs will get the proper time. This does mean "until" will be not correct.

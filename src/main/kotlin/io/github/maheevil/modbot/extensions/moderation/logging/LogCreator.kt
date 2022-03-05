@@ -18,7 +18,7 @@ import kotlin.time.Duration
  * unmuted - 0x55ff00
  */
 
-suspend fun createModLog(channel: GuildMessageChannel, modAction: String, moderator: User, target: User, reason: String?, colour: Color, duration: Duration? = null){
+suspend fun createModLog(channel: GuildMessageChannel, modAction: String, moderator: User?, target: User, reason: String?, colour: Color, duration: Duration? = null){
     channel.createEmbed {
         title = "Member $modAction!"
         color = colour
@@ -28,7 +28,7 @@ suspend fun createModLog(channel: GuildMessageChannel, modAction: String, modera
             field("Duration", true){durationToHuman(duration)}
             field("Until",true){(Clock.System.now() + duration).toDiscord(TimestampType.ShortDateTime)}
         }
-        field("Moderator",false){ moderator.mention }
+        field("Moderator",false){ moderator?.mention ?: "Moderator is gone, reduced to atoms" }
         timestamp = Clock.System.now()
     }
 }
