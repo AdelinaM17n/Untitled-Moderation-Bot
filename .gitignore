@@ -114,3 +114,5 @@ build/
 #other stuff
 .linkie-cache
 config/config.json
+/.idea/modules/Untitled-Moderation-Bot.main.iml
+/.idea/modules/Untitled-Moderation-Bot.test.iml
