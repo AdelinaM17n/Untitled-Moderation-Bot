@@ -12,6 +12,7 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.ban
 import dev.kord.core.behavior.edit
 import dev.kord.core.entity.Message
+import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
 import io.github.maheevil.modbot.extensions.moderation.logging.createModLog
 import io.github.maheevil.modbot.guildConfigDataMap
@@ -24,10 +25,11 @@ suspend fun createBanWithLog(meessage: Message,guild: GuildBehavior, moderator: 
         return
     }
     guild.ban(target){reason = banReason}
+    val targetUser: User? = guild.kord.getUser(target)
     meessage.respond(
-            "Banned ${guild.kord.getUser(target)?.mention}, Reason given : $banReason"
+            "Banned ${targetUser?.mention}, Reason given : $banReason"
     )
-    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"banned",moderator.id,target,banReason, Color(0xff0000))
+    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"banned",moderator.asUser(),targetUser,banReason, Color(0xff0000))
 }
 
 suspend fun removeBanWithLog(meessage: Message,guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, unbanReason: String?){
@@ -36,18 +38,20 @@ suspend fun removeBanWithLog(meessage: Message,guild: GuildBehavior, moderator: 
         return
     }
     guild.unban(target,unbanReason)
+    val targetUser: User? = guild.kord.getUser(target)
     meessage.respond(
-            "Unbanned ${guild.kord.getUser(target)?.mention}, Reason given : $unbanReason"
+            "Unbanned ${targetUser?.mention}, Reason given : $unbanReason"
     )
-    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"unbanned",moderator.id,target,unbanReason, Color(0x09850b))
+    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"unbanned",moderator.asUser(),targetUser,unbanReason, Color(0x09850b))
 }
 
 suspend fun kickUserWithLog(meessage: Message?, guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, kickReason: String?){
     guild.kick(target,kickReason)
+    val targetUser: User? = guild.kord.getUser(target)
     meessage?.respond(
-            "Kicked ${guild.kord.getUser(target)?.mention}, Reason given : $kickReason"
+            "Kicked ${targetUser}, Reason given : $kickReason"
     )
-    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"kicked",moderator.id,target,kickReason, Color(0xff5e00))
+    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"kicked",moderator.asUser(),targetUser,kickReason, Color(0xff5e00))
 }
 
 suspend fun timeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, duration: Duration, reason: String?){
@@ -55,10 +59,11 @@ suspend fun timeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moderat
         this.reason = reason
         timeoutUntil =  Clock.System.now() + duration
     }
+    val targetUser: User? = guild.kord.getUser(target)
     meessage?.respond(
             "timedout ${guild.kord.getUser(target)?.mention},Duration = $duration, Reason given : $reason"
     )
-    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"timedout",moderator.id,target,reason, Color(0xd9d904),duration)
+    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"timedout",moderator.asUser(),targetUser,reason, Color(0xd9d904),duration)
 }
 
 suspend fun untimeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, reason: String?){
@@ -66,10 +71,11 @@ suspend fun untimeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moder
         this.reason = reason
         timeoutUntil = null
     }
+    val targetUser: User? = guild.kord.getUser(target)
     meessage?.respond(
             "untimedout ${guild.kord.getUser(target)?.mention}, Reason given : $reason"
     )
-    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"timeoutn't",moderator.id,target,reason, Color(0x55ff00))
+    createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"timeoutn't",moderator.asUser(),targetUser,reason, Color(0x55ff00))
 }
 
 suspend fun verifyModCommand(guild: GuildBehavior, message: Message, target: Snowflake, permission: Permission,targetPresenceRequired: Boolean = false) : Boolean {

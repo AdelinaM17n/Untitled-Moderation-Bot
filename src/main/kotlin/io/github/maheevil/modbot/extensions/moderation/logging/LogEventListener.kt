@@ -31,7 +31,14 @@ class LogEventListener : Extension() {
 
                 if(ban?.targetId == null || ban.userId == ban.kord.selfId) return@action
 
-                createModLog(event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,"banned", ban.userId, ban.targetId!!, ban.reason, Color(0xff0000))
+                createModLog(
+                    event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
+                    "banned",
+                    kord.getUser(ban.userId),
+                    kord.getUser(ban.targetId!!),
+                    ban.reason,
+                    Color(0xff0000)
+                )
             }
         }
 
@@ -44,7 +51,14 @@ class LogEventListener : Extension() {
 
                 if(unban?.targetId == null || unban.userId == unban.kord.selfId) return@action
 
-                createModLog(event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,"unbanned", unban.userId, unban.targetId!!, unban.reason, Color(0x09850b))
+                createModLog(
+                    event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
+                    "unbanned",
+                    kord.getUser(unban.userId),
+                    kord.getUser(unban.targetId!!),
+                    unban.reason,
+                    Color(0x09850b)
+                )
             }
         }
 
@@ -57,17 +71,32 @@ class LogEventListener : Extension() {
                             .filter { it.targetId == event.user.id && Clock.System.now().minus(it.id.timestamp).inWholeSeconds < 60}.firstOrNull()
                     // Banning a user also creates an invisible kick audit log entry so there is a check to see if the user is banned
                     if(kick?.targetId != null && kick.userId != kick.kord.selfId && event.guild.getBanOrNull(kick.targetId!!) == null){
-                        createModLog(event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,"kicked",kick.userId,kick.targetId!!,kick.reason, Color(0xff5e00))
+                        createModLog(
+                            event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
+                            "kicked",
+                            kord.getUser(kick.userId),
+                            kord.getUser(kick.targetId!!),
+                            kick.reason,
+                            Color(0xff5e00)
+                        )
                     }
                 }
 
-                createJoinLeaveLog(event.guild.getChannel(guildConfigDataMap[event.guild.id.toLong()]?.joinLeaveLogsChannel ?: return@action) as GuildMessageChannel,false,event.user)
+                createJoinLeaveLog(
+                    event.guild.getChannel(guildConfigDataMap[event.guild.id.toLong()]?.joinLeaveLogsChannel ?: return@action) as GuildMessageChannel,
+                    false,
+                    event.user
+                )
             }
         }
 
         event<MemberJoinEvent> {
             action {
-                createJoinLeaveLog(event.guild.getChannel(guildConfigDataMap[event.guild.id.toLong()]?.joinLeaveLogsChannel ?: return@action) as GuildMessageChannel,true,event.member.asUser())
+                createJoinLeaveLog(
+                    event.guild.getChannel(guildConfigDataMap[event.guild.id.toLong()]?.joinLeaveLogsChannel ?: return@action) as GuildMessageChannel,
+                    true,
+                    event.member.asUser()
+                )
             }
         }
 
@@ -84,13 +113,12 @@ class LogEventListener : Extension() {
 
                 val isTimedouted = event.member.timeoutUntil != null
                 createModLog(
-                        event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
-                        if(isTimedouted) "timedout" else "timedoutn't",
-                        auditEntry.userId,
-                        auditEntry.targetId!!,
-                        auditEntry.reason,
-                        Color(0x09850b),
-                        if(isTimedouted) event.member.timeoutUntil!!.minus(Clock.System.now()).plus(1.minutes) else null //One minute added so logs will get the proper time. This does mean "until" will be not correct.
+                    event.guild.getChannel(modLogsSnowflake) as GuildMessageChannel,
+                    if(isTimedouted) "timedout" else "timedoutn't",
+                    kord.getUser(auditEntry.userId), kord.getUser(auditEntry.targetId!!),
+                    auditEntry.reason,
+                    Color(0x09850b),
+                    if(isTimedouted) event.member.timeoutUntil!!.minus(Clock.System.now()).plus(1.minutes) else null //One minute added so logs will get the proper time. This does mean "until" will be not correct.
                 )
             }
         }

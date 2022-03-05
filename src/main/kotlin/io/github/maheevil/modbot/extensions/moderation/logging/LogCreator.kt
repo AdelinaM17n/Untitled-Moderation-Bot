@@ -18,20 +18,17 @@ import kotlin.time.Duration
  * unmuted - 0x55ff00
  */
 
-suspend fun createModLog(channel: GuildMessageChannel, modAction: String, moderator: Snowflake, target: Snowflake, reason: String?, colour: Color, duration: Duration? = null){
-    val targetUser: User? = channel.kord.getUser(target)
-    val targetUserNameWithDiscrim = "${targetUser?.username ?: "Deleted User"}#${targetUser?.discriminator ?: "0000"}"
-
+suspend fun createModLog(channel: GuildMessageChannel, modAction: String, moderator: User?, target: User?, reason: String?, colour: Color, duration: Duration? = null){
     channel.createEmbed {
         title = "Member $modAction!"
         color = colour
-        field("User",false){"<@${target.value}> `$targetUserNameWithDiscrim`"}
+        field("User",false){"<@${target?.id}> `${target?.mention}`"}
         field("Reason",false) {"`${reason ?: "No reason given"}`"}
         if(duration != null) {
             field("Duration", true){durationToHuman(duration)}
             field("Until",true){(Clock.System.now() + duration).toDiscord(TimestampType.ShortDateTime)}
         }
-        field("Moderator",false){"${channel.getGuild().getMemberOrNull(moderator)?.mention ?: moderator.value}"}
+        field("Moderator",false){"${moderator?.mention}"}
         timestamp = Clock.System.now()
     }
 }

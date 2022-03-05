@@ -29,8 +29,8 @@ class RaidProt : Extension() {
 
                     kickUserWithLog(null,guild,event.kord.getSelf(),event.message.author!!.id,kickReason)
                     createAlertLog(
-                            guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return@action) as GuildMessageChannel,
-                            event.message.author!!,event.message.content, "Auto-Anti-Raid Alert"
+                        guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return@action) as GuildMessageChannel,
+                        event.message.author!!,event.message.content, "Auto-Anti-Raid Alert"
                     )
                 }
             }
