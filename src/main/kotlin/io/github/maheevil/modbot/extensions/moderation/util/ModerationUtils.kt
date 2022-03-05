@@ -72,9 +72,7 @@ suspend fun untimeoutUserWithLog(meessage: Message?, guild: GuildBehavior, moder
     createModLog(guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return) as GuildMessageChannel,"timeoutn't",moderator.id,target,reason, Color(0x55ff00))
 }
 
-suspend fun verifyModCommand(guild: GuildBehavior?, message: Message, target: Snowflake, permission: Permission,targetPresenceRequired: Boolean = false) : Boolean {
-    if(guild == null) return false
-
+suspend fun verifyModCommand(guild: GuildBehavior, message: Message, target: Snowflake, permission: Permission,targetPresenceRequired: Boolean = false) : Boolean {
     val targetAsMember = guild.getMemberOrNull(target)
 
     if (targetAsMember == null && targetPresenceRequired) {
