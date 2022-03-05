@@ -17,14 +17,15 @@ class RaidProt : Extension() {
         event<MessageCreateEvent>{
             action{
                 val guild: Guild = event.getGuild() ?: return@action
+                val raidPingCount = guildConfigDataMap[guild.id.toLong()]?.raidPingCount ?: return@action
 
                 if(event.message.author == null || event.message.getAuthorAsMember()?.getPermissions()?.contains(Permission.MentionEveryone) == true)
                     return@action
 
-                if(event.message.mentionedUserIds.count() > 20 ){
+                if(event.message.mentionedUserIds.count() > raidPingCount){
                     event.message.delete()
 
-                    val kickReason = "Anti-Raid: More than 20 users pinged in one message"
+                    val kickReason = "Anti-Raid: More than $raidPingCount users pinged in one message"
 
                     kickUserWithLog(null,guild,event.kord.getSelf(),event.message.author!!.id,kickReason)
                     createAlertLog(

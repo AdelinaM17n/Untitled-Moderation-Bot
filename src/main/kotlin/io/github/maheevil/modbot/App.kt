@@ -27,6 +27,7 @@ suspend fun main() {
         }
         applicationCommands {
             enabled = true
+            //defaultGuild(TEST_SERVER_ID)
         }
         extensions {
             add(::ModerationCommands)

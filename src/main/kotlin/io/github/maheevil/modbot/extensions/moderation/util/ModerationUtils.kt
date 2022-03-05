@@ -19,6 +19,10 @@ import kotlinx.datetime.Clock
 import kotlin.time.Duration
 
 suspend fun createBanWithLog(meessage: Message,guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, banReason: String?){
+    if(guild.getBanOrNull(target) != null){
+        meessage.respond("The member is already banned")
+        return
+    }
     guild.ban(target){reason = banReason}
     meessage.respond(
             "Banned ${guild.kord.getUser(target)?.mention}, Reason given : $banReason"
@@ -27,6 +31,10 @@ suspend fun createBanWithLog(meessage: Message,guild: GuildBehavior, moderator: 
 }
 
 suspend fun removeBanWithLog(meessage: Message,guild: GuildBehavior, moderator: UserBehavior, target: Snowflake, unbanReason: String?){
+    if(guild.getBanOrNull(target) == null){
+        meessage.respond("The member is not banned")
+        return
+    }
     guild.unban(target,unbanReason)
     meessage.respond(
             "Unbanned ${guild.kord.getUser(target)?.mention}, Reason given : $unbanReason"

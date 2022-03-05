@@ -11,7 +11,7 @@ import java.io.FileWriter
 import java.nio.file.Paths
 
 @Serializable
-data class GuildConfigData(val joinLeaveLogsChannel: Snowflake?, val alertLogsChannel: Snowflake?, val modLogsChannel: Snowflake?, val invite: String?)
+data class GuildConfigData(val joinLeaveLogsChannel: Snowflake?, val alertLogsChannel: Snowflake?, val modLogsChannel: Snowflake?, val invite: String?,val raidPingCount: Int?)
 
 fun deserializeAndLoadFromJson(){
     val jsonConfigFile = File(Paths.get("").toAbsolutePath().toString().plus("/config/config.json")).readText(Charsets.UTF_8)
