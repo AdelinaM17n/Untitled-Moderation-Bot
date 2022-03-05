@@ -33,14 +33,14 @@ class ModerationCommands : Extension() {
         chatCommand(::ModCommandArgs) {
             name = "unban"
             description = "Unbans the user."
-            //requiredPerms.add(Permission.BanMembers)
+            requiredPerms.add(Permission.BanMembers)
 
             check { hasPermission(Permission.BanMembers) }
             check { isNotBot() }
 
             action {
-                if(!verifyModCommand(guild!!,message,arguments.target.id, Permission.BanMembers))
-                    return@action
+                //if(!verifyModCommand(guild!!,message,arguments.target.id, Permission.BanMembers))
+                    //return@action
                 removeBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
             }
         }
