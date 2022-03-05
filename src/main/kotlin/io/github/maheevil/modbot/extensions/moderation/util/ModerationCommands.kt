@@ -26,7 +26,7 @@ class ModerationCommands : Extension() {
             action {
                 if(!verifyModCommand(guild!!,message,arguments.target.id, Permission.BanMembers))
                     return@action
-                createBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
+                createBanWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
             }
         }
 
@@ -41,7 +41,7 @@ class ModerationCommands : Extension() {
             action {
                 //if(!verifyModCommand(guild!!,message,arguments.target.id, Permission.BanMembers))
                     //return@action
-                removeBanWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
+                removeBanWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
             }
         }
 
@@ -56,7 +56,7 @@ class ModerationCommands : Extension() {
             action {
                 if(!verifyModCommand(guild!!,message,arguments.target.id, Permission.KickMembers, true))
                     return@action
-                kickUserWithLog(message,guild!!,user!!,arguments.target.id, arguments.reason)
+                kickUserWithLog(message,guild!!,user!!,arguments.target, arguments.reason)
             }
         }
 
@@ -71,7 +71,7 @@ class ModerationCommands : Extension() {
             action {
                 if(!verifyModCommand(guild!!,message,arguments.target.id, Permission.ModerateMembers,true))
                     return@action
-                timeoutUserWithLog(message,guild!!,user!!,arguments.target.id,Duration.parse(arguments.duration),arguments.reason)
+                timeoutUserWithLog(message,guild!!,user!!,arguments.target,Duration.parse(arguments.duration),arguments.reason)
             }
         }
 
@@ -86,7 +86,7 @@ class ModerationCommands : Extension() {
             action {
                 if(!verifyModCommand(guild!!,message,arguments.target.id, Permission.ModerateMembers,true))
                     return@action
-                untimeoutUserWithLog(message, guild!!, user!!, arguments.target.id, arguments.reason)
+                untimeoutUserWithLog(message, guild!!, user!!, arguments.target, arguments.reason)
             }
         }
     }

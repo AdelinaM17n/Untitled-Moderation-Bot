@@ -27,7 +27,7 @@ class RaidProt : Extension() {
 
                     val kickReason = "Anti-Raid: More than $raidPingCount users pinged in one message"
 
-                    kickUserWithLog(null,guild,event.kord.getSelf(),event.message.author!!.id,kickReason)
+                    kickUserWithLog(null,guild,event.kord.getSelf(),event.message.author!!,kickReason)
                     createAlertLog(
                         guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return@action) as GuildMessageChannel,
                         event.message.author!!,event.message.content, "Auto-Anti-Raid Alert"
