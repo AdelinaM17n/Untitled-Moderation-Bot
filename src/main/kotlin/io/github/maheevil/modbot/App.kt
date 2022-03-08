@@ -21,6 +21,9 @@ private val TOKEN = env("TOKEN")
 
 suspend fun main() {
     val bot = ExtensibleBot(TOKEN) {
+        cache {
+            cachedMessages = 2000
+        }
         chatCommands {
             defaultPrefix = "!"
             enabled = true
