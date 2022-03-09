@@ -71,8 +71,8 @@ class MiscCommands : Extension(){
                     val oldData: GuildConfigData? = guildConfigDataMap[guild!!.id.toLong()]
                     val newGuildConfigData: GuildConfigData = GuildConfigData(
                         arguments.joinAndLeaveLogs?.id ?: oldData?.joinLeaveLogsChannel,
+                        arguments.alertLogs?.id ?: oldData?.alertLogsChannel,
                         arguments.modLogs?.id ?: oldData?.modLogsChannel,
-                            arguments.alertLogs?.id ?: oldData?.alertLogsChannel,
                             arguments.inviteCode ?: oldData?.invite,
                         arguments.raidPingCount ?: oldData?.raidPingCount
                     )
@@ -108,11 +108,11 @@ class MiscCommands : Extension(){
                         respond {  }
                     }
                     val newGuildConfigData: GuildConfigData = GuildConfigData(
-                            if(arguments.joinAndLeaveLogs == true) null else oldData?.joinLeaveLogsChannel,
-                            if(arguments.modLogs == true) null else oldData?.modLogsChannel,
-                            if(arguments.alertLogs == true) null else oldData?.alertLogsChannel,
-                            if(arguments.inviteCode == true) null else oldData?.invite,
-                            if(arguments.raidPingCount == true) null else oldData?.raidPingCount
+                        if(arguments.joinAndLeaveLogs == true) null else oldData?.joinLeaveLogsChannel,
+                        if(arguments.alertLogs == true) null else oldData?.alertLogsChannel,
+                        if(arguments.modLogs == true) null else oldData?.modLogsChannel,
+                        if(arguments.inviteCode == true) null else oldData?.invite,
+                        if(arguments.raidPingCount == true) null else oldData?.raidPingCount
                     )
 
                     putToHashMap(guild!!.id.toLong(),newGuildConfigData)
