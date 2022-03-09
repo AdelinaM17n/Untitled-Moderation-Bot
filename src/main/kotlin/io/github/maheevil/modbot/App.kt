@@ -46,7 +46,10 @@ suspend fun main() {
 
             // KordEx extra modules
             extMappings {}
-            extPhishing { appName = "Untitled-Moderation-Bot" }
+            extPhishing {
+                appName = "Untitled-Moderation-Bot"
+                logChannelName = "alert-logs"
+            }
         }
     }
 
