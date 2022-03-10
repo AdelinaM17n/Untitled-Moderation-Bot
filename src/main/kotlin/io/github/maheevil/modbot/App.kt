@@ -16,6 +16,7 @@ import io.github.maheevil.modbot.extensions.logging.LogEventListener
 import io.github.maheevil.modbot.extensions.moderation.ModerationCommands
 import io.github.maheevil.modbot.extensions.util.MiscCommands
 import io.github.maheevil.modbot.extensions.util.SuggestionCommand
+import io.github.maheevil.modbot.extensions.util.config.ConfigCommands
 import io.github.maheevil.modbot.extensions.util.config.GuildConfigData
 import io.github.maheevil.modbot.extensions.util.config.deserializeAndLoadFromJson
 
@@ -43,6 +44,7 @@ suspend fun main() {
             add(::LogEventListener)
             add(::SuggestionCommand)
             add(::MiscCommands)
+            add(::ConfigCommands)
 
             // KordEx extra modules
             extMappings {}
