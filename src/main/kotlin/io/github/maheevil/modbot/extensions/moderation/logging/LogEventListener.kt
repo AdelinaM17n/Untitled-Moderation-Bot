@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-package io.github.maheevil.modbot.extensions.logging
+package io.github.maheevil.modbot.extensions.moderation.logging
 
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.event
@@ -15,8 +15,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.getAuditLogEntries
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.guild.*
-import io.github.maheevil.modbot.extensions.moderation.logging.createJoinLeaveLog
-import io.github.maheevil.modbot.extensions.moderation.logging.createModLog
 import io.github.maheevil.modbot.guildConfigDataMap
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
