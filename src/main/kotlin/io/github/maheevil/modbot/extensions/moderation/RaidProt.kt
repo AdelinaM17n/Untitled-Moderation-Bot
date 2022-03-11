@@ -25,19 +25,18 @@ class RaidProt : Extension() {
 
                 if(event.message.author == null || event.message.getAuthorAsMember()?.getPermissions()?.contains(Permission.MentionEveryone) == true)
                     return@action
-                if(event.message.mentionedUserIds.count() < raidPingCount)
-                    return@action
 
-                event.message.delete()
-                val kickReason = "Anti-Raid: More than $raidPingCount users pinged in one message"
+                if(event.message.mentionedUserIds.count() > raidPingCount){
+                    event.message.delete()
 
-                kickUserWithLog(null,guild,event.kord.getSelf(),event.message.author!!,kickReason)
-                createAlertLog(
+                    val kickReason = "Anti-Raid: More than $raidPingCount users pinged in one message"
+
+                    kickUserWithLog(null,guild,event.kord.getSelf(),event.message.author!!,kickReason)
+                    createAlertLog(
                         guild.getChannel(guildConfigDataMap[guild.id.toLong()]?.modLogsChannel ?: return@action) as GuildMessageChannel,
-                        event.message.author!!,
-                        event.message.content,
-                        "Auto-Anti-Raid Alert"
-                )
+                        event.message.author!!,event.message.content, "Auto-Anti-Raid Alert"
+                    )
+                }
             }
         }
     }
