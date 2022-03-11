@@ -15,8 +15,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.getAuditLogEntries
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.guild.*
-import io.github.maheevil.modbot.extensions.moderation.logging.createJoinLeaveLog
-import io.github.maheevil.modbot.extensions.moderation.logging.createModLog
 import io.github.maheevil.modbot.guildConfigDataMap
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull

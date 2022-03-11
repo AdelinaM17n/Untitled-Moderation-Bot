@@ -16,9 +16,9 @@ import io.github.maheevil.modbot.extensions.logging.LogEventListener
 import io.github.maheevil.modbot.extensions.moderation.ModerationCommands
 import io.github.maheevil.modbot.extensions.util.MiscCommands
 import io.github.maheevil.modbot.extensions.util.SuggestionCommand
-import io.github.maheevil.modbot.extensions.util.config.ConfigCommands
-import io.github.maheevil.modbot.extensions.util.config.GuildConfigData
-import io.github.maheevil.modbot.extensions.util.config.deserializeAndLoadFromJson
+import io.github.maheevil.modbot.extensions.util.ConfigCommands
+import io.github.maheevil.modbot.utils.GuildConfigData
+import io.github.maheevil.modbot.utils.deserializeAndLoadFromJson
 
 var guildConfigDataMap = HashMap<Long, GuildConfigData>()
 

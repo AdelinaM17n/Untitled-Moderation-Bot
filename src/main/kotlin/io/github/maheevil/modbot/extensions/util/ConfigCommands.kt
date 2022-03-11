@@ -1,4 +1,9 @@
-package io.github.maheevil.modbot.extensions.util.config
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+package io.github.maheevil.modbot.extensions.util
 
 import com.kotlindiscord.kord.extensions.checks.hasPermission
 import com.kotlindiscord.kord.extensions.commands.Arguments
@@ -12,8 +17,9 @@ import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import com.kotlindiscord.kord.extensions.types.respond
 import com.soywiz.korio.dynamic.KDynamic.Companion.toLong
 import dev.kord.common.entity.Permission
-import dev.kord.core.entity.channel.TextChannel
 import io.github.maheevil.modbot.guildConfigDataMap
+import io.github.maheevil.modbot.utils.GuildConfigData
+import io.github.maheevil.modbot.utils.putToHashMap
 
 class ConfigCommands : Extension() {
     override val name = "config"

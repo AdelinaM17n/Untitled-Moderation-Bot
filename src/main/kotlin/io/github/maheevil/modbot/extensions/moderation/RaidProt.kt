@@ -12,7 +12,7 @@ import dev.kord.common.entity.Permission
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.message.MessageCreateEvent
-import io.github.maheevil.modbot.extensions.moderation.logging.createAlertLog
+import io.github.maheevil.modbot.extensions.logging.createAlertLog
 import io.github.maheevil.modbot.guildConfigDataMap
 
 class RaidProt : Extension() {

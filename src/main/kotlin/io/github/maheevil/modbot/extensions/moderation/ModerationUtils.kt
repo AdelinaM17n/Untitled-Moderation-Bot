@@ -19,7 +19,7 @@ import dev.kord.core.behavior.edit
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
-import io.github.maheevil.modbot.extensions.moderation.logging.createModLog
+import io.github.maheevil.modbot.extensions.logging.createModLog
 import io.github.maheevil.modbot.guildConfigDataMap
 import kotlinx.datetime.Clock
 import kotlin.time.Duration
