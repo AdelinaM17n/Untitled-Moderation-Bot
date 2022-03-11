@@ -26,12 +26,9 @@ class MiscCommands : Extension(){
             action{
                 //Removed the guild check because this is a guild only slash command
                 respond {
-                    if(guild == null){
-                        content = "This is guild only command"
-                        return@action
-                    }
-
-                    content = getInviteLink(channel.fetchChannel() as TextChannel, guild!!)
+                    if(guild != null)
+                        content = getInviteLink(channel.fetchChannel() as TextChannel, guild!!)
+                    content = "This is guild only command"
                 }
             }
         }
