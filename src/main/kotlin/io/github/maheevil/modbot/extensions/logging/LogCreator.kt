@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-package io.github.maheevil.modbot.extensions.moderation.logging
+package io.github.maheevil.modbot.extensions.logging
 
 import com.kotlindiscord.kord.extensions.time.TimestampType
 import com.kotlindiscord.kord.extensions.time.toDiscord
@@ -11,7 +11,6 @@ import dev.kord.common.Color
 import dev.kord.core.behavior.channel.createEmbed
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
-import io.github.maheevil.modbot.util.durationToHuman
 import kotlinx.datetime.Clock
 import kotlin.time.Duration
 
@@ -29,7 +28,7 @@ suspend fun createModLog(channel: GuildMessageChannel, modAction: String, modera
         field("User",false){"<@${target.id}> `${target.mention}`"}
         field("Reason",false) {"`${reason ?: "No reason given"}`"}
         if(duration != null) {
-            field("Duration", true){durationToHuman(duration)}
+            field("Duration", true){ durationToHuman(duration) }
             field("Until",true){(Clock.System.now() + duration).toDiscord(TimestampType.ShortDateTime)}
         }
         field("Moderator",false){ moderator?.mention ?: "Moderator is gone, reduced to atoms" }
@@ -55,4 +54,13 @@ suspend fun createJoinLeaveLog(channel: GuildMessageChannel, joined: Boolean, us
         field("User",false){ "${user.mention} `${user.username}#${user.discriminator}`" }
         timestamp = Clock.System.now()
     }
+}
+
+fun durationToHuman(duration: Duration) : String{
+    val minutes = duration.inWholeMinutes % 60 ; val hours = duration.inWholeHours % 24 ; val days = duration.inWholeDays
+
+    return duration.toString()
+            .replace("d", if(days.toInt() == 1) " day" else " days")
+            .replace("h", if(hours.toInt() == 1) " hour" else " hours")
+            .replace("m", if(minutes.toInt() == 1) " minute" else " minutes")
 }

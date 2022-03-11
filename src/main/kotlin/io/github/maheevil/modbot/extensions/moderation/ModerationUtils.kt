@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-package io.github.maheevil.modbot.extensions.moderation.util
+package io.github.maheevil.modbot.extensions.moderation
 
 import com.kotlindiscord.kord.extensions.utils.hasPermission
 import com.kotlindiscord.kord.extensions.utils.respond
@@ -19,7 +19,7 @@ import dev.kord.core.behavior.edit
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.GuildMessageChannel
-import io.github.maheevil.modbot.extensions.moderation.logging.createModLog
+import io.github.maheevil.modbot.extensions.logging.createModLog
 import io.github.maheevil.modbot.guildConfigDataMap
 import kotlinx.datetime.Clock
 import kotlin.time.Duration

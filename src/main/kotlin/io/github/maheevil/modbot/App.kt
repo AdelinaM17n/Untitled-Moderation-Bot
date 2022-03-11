@@ -11,17 +11,18 @@ import com.kotlindiscord.kord.extensions.modules.extra.phishing.extPhishing
 import com.kotlindiscord.kord.extensions.utils.env
 import com.soywiz.korio.dynamic.KDynamic.Companion.toLong
 import dev.kord.common.entity.Snowflake
-import io.github.maheevil.modbot.extensions.moderation.auto_moderation.RaidProt
-import io.github.maheevil.modbot.extensions.moderation.logging.LogEventListener
-import io.github.maheevil.modbot.extensions.moderation.util.ModerationCommands
+import io.github.maheevil.modbot.extensions.moderation.RaidProt
+import io.github.maheevil.modbot.extensions.logging.LogEventListener
+import io.github.maheevil.modbot.extensions.moderation.ModerationCommands
 import io.github.maheevil.modbot.extensions.util.MiscCommands
-import io.github.maheevil.modbot.extensions.util.suggestions.SuggestionCommand
-import io.github.maheevil.modbot.util.config.GuildConfigData
-import io.github.maheevil.modbot.util.config.deserializeAndLoadFromJson
+import io.github.maheevil.modbot.extensions.util.SuggestionCommand
+import io.github.maheevil.modbot.extensions.util.ConfigCommands
+import io.github.maheevil.modbot.utils.GuildConfigData
+import io.github.maheevil.modbot.utils.deserializeAndLoadFromJson
 
-var guildConfigDataMap = HashMap<Long,GuildConfigData>()
+var guildConfigDataMap = HashMap<Long, GuildConfigData>()
 
-//val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong())
+val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong())
 private val TOKEN = env("TOKEN")
 
 suspend fun main() {
@@ -35,7 +36,7 @@ suspend fun main() {
         }
         applicationCommands {
             enabled = true
-            //defaultGuild(TEST_SERVER_ID)
+            defaultGuild(TEST_SERVER_ID)
         }
         extensions {
             add(::ModerationCommands)
@@ -43,6 +44,7 @@ suspend fun main() {
             add(::LogEventListener)
             add(::SuggestionCommand)
             add(::MiscCommands)
+            add(::ConfigCommands)
 
             // KordEx extra modules
             extMappings {}
