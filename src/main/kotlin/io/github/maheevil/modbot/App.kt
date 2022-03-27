@@ -11,12 +11,12 @@ import com.kotlindiscord.kord.extensions.modules.extra.phishing.extPhishing
 import com.kotlindiscord.kord.extensions.utils.env
 import com.soywiz.korio.dynamic.KDynamic.Companion.toLong
 import dev.kord.common.entity.Snowflake
-import io.github.maheevil.modbot.extensions.moderation.RaidProt
 import io.github.maheevil.modbot.extensions.logging.LogEventListener
 import io.github.maheevil.modbot.extensions.moderation.ModerationCommands
-import io.github.maheevil.modbot.extensions.util.MiscCommands
-import io.github.maheevil.modbot.extensions.util.SuggestionCommand
+import io.github.maheevil.modbot.extensions.moderation.RaidProt
 import io.github.maheevil.modbot.extensions.util.ConfigCommands
+import io.github.maheevil.modbot.extensions.util.MiscUtils
+import io.github.maheevil.modbot.extensions.util.SuggestionCommand
 import io.github.maheevil.modbot.utils.GuildConfigData
 import io.github.maheevil.modbot.utils.deserializeAndLoadFromJson
 
@@ -43,8 +43,8 @@ suspend fun main() {
             add(::RaidProt)
             add(::LogEventListener)
             add(::SuggestionCommand)
-            add(::MiscCommands)
             add(::ConfigCommands)
+            add(::MiscUtils)
 
             // KordEx extra modules
             extMappings {}
