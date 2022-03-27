@@ -39,7 +39,7 @@ class MiscUtils : Extension() {
                         val message = (event.getGuild()
                                 ?.getChannelOrNull(Snowflake(matchResult.groupValues[2])) as TextChannel?)
                                 ?.getMessageOrNull(Snowflake(matchResult.groupValues[3])) ?: continue
-                        val messageAuthor = message.author ?: continue
+                        val messageAuthor = message.author
                         embeds.add(getMessagePreviewEmbed(message,messageAuthor,matchResult.value))
                     }
                 }
@@ -53,13 +53,17 @@ class MiscUtils : Extension() {
             action {
                 val matchResult = urlPatternRegex.find(arguments.messageUrl)
                 if(matchResult == null){
-                    respond { content = "Not valid url" }
+                    respond { content = "Not a valid url" }
                     return@action
                 }
                 val message = (guild
                         ?.getChannelOrNull(Snowflake(matchResult.groupValues[2])) as TextChannel?)
-                        ?.getMessageOrNull(Snowflake(matchResult.groupValues[3])) ?: return@action
-                val messageAuthor = message.author ?: return@action
+                        ?.getMessageOrNull(Snowflake(matchResult.groupValues[3]))
+                if(message == null){
+                    respond { content = "Not a valid message" }
+                    return@action
+                }
+                val messageAuthor = message.author
 
                 respond {
                     embeds.add(getMessagePreviewEmbed(message,messageAuthor,matchResult.value))
@@ -92,14 +96,14 @@ class MiscUtils : Extension() {
         }
     }
 
-    private fun getMessagePreviewEmbed(message: Message,messageAuthor: User,fullUrl: String) : EmbedBuilder{
+    private fun getMessagePreviewEmbed(message: Message,messageAuthor: User?,fullUrl: String) : EmbedBuilder{
         val embed = EmbedBuilder()
         embed.title = "Message Preview"
         embed.url = fullUrl
         embed.color = Color(0xd9d904)
         embed.author {
-            name = messageAuthor.username
-            icon = messageAuthor.avatar?.url
+            name = messageAuthor?.username ?: "Probably a webhook"
+            icon = messageAuthor?.avatar?.url
         }
         embed.description = message.content
         embed.image = message.attachments.firstOrNull()?.url
