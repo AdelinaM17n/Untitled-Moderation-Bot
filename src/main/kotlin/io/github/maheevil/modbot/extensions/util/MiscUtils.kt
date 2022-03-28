@@ -31,11 +31,11 @@ class MiscUtils : Extension() {
     override suspend fun setup() {
         event<MessageCreateEvent>{
             action {
-                if(event.message.author.isNullOrBot())
-                    return@action
-
+                if(event.message.author.isNullOrBot()) return@action
+                val matches = urlPatternRegex.findAll(event.message.content)
+                if(!matches.any()) return@action
                 event.message.respond {
-                    for(matchResult in urlPatternRegex.findAll(event.message.content)){
+                    for(matchResult in matches){
                         val message = (event.getGuild()
                                 ?.getChannelOrNull(Snowflake(matchResult.groupValues[2])) as TextChannel?)
                                 ?.getMessageOrNull(Snowflake(matchResult.groupValues[3])) ?: continue
@@ -64,7 +64,6 @@ class MiscUtils : Extension() {
                     return@action
                 }
                 val messageAuthor = message.author
-
                 respond {
                     embeds.add(getMessagePreviewEmbed(message,messageAuthor,matchResult.value))
                 }
@@ -82,7 +81,6 @@ class MiscUtils : Extension() {
                         content = "This is guild only command"
                         return@action
                     }
-
                     content = getInviteLink(channel.fetchChannel() as TextChannel, guild!!)
                 }
             }
@@ -96,11 +94,11 @@ class MiscUtils : Extension() {
         }
     }
 
-    private fun getMessagePreviewEmbed(message: Message,messageAuthor: User?,fullUrl: String) : EmbedBuilder{
+    private fun getMessagePreviewEmbed(message: Message, messageAuthor: User?, fullUrl: String) : EmbedBuilder{
         val embed = EmbedBuilder()
         embed.title = "Message Preview"
         embed.url = fullUrl
-        embed.color = Color(0xd9d904)
+        embed.color = Color(0x55ff00)
         embed.author {
             name = messageAuthor?.username ?: "Probably a webhook"
             icon = messageAuthor?.avatar?.url
