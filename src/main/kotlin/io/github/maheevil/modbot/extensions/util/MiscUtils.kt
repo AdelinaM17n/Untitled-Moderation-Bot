@@ -30,6 +30,7 @@ class MiscUtils : Extension() {
 
     override suspend fun setup() {
         event<MessageCreateEvent>{
+            check { passIf(guildConfigDataMap[event.guildId.toLong()]?.msgPreview == true) }
             action {
                 if(event.message.author.isNullOrBot()) return@action
                 val matches = urlPatternRegex.findAll(event.message.content)

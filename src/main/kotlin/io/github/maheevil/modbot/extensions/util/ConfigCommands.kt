@@ -38,22 +38,25 @@ class ConfigCommands : Extension() {
                 check { hasPermission(Permission.ManageGuild) }
 
                 action {
-                    if (guild == null) {
+                    if(guild == null) {
                         respond { content = "This is a guild only command" }
                         return@action
                     }
-                    if (arguments.alertLogs == null && arguments.modLogs == null && arguments.joinAndLeaveLogs == null && arguments.inviteCode == null && arguments.raidPingCount == null) {
+                    if(arguments.alertLogs == null && arguments.modLogs == null && arguments.joinAndLeaveLogs == null
+                            && arguments.inviteCode == null && arguments.raidPingCount == null && arguments.msgPreview == null
+                    ){
                         respond { content = "Please enter atleast one value" }
                         return@action
                     }
 
                     val oldData: GuildConfigData? = guildConfigDataMap[guild!!.id.toLong()]
-                    val newGuildConfigData: GuildConfigData = GuildConfigData(
+                    val newGuildConfigData = GuildConfigData(
                             arguments.joinAndLeaveLogs?.id ?: oldData?.joinLeaveLogsChannel,
                             arguments.alertLogs?.id ?: oldData?.alertLogsChannel,
                             arguments.modLogs?.id ?: oldData?.modLogsChannel,
                             arguments.inviteCode ?: oldData?.invite,
-                            arguments.raidPingCount ?: oldData?.raidPingCount
+                            arguments.raidPingCount ?: oldData?.raidPingCount,
+                            arguments.msgPreview ?: oldData?.msgPreview
                     )
 
                     putToHashMap(guild!!.id.toLong(),newGuildConfigData)
@@ -75,8 +78,10 @@ class ConfigCommands : Extension() {
                         respond { content = "This is a guild only command" }
                         return@action
                     }
-                    if (arguments.alertLogs == null && arguments.modLogs == null && arguments.joinAndLeaveLogs == null && arguments.inviteCode == null && arguments.raidPingCount == null) {
-                        putToHashMap(guild!!.id.toLong(), GuildConfigData(null,null,null,null,null))
+                    if (arguments.alertLogs == null && arguments.modLogs == null && arguments.joinAndLeaveLogs == null &&
+                            arguments.inviteCode == null && arguments.raidPingCount == null && arguments.msgPreview == null
+                    ){
+                        putToHashMap(guild!!.id.toLong(), GuildConfigData(null,null,null,null,null, null))
                         respond { content = "Cleared all values" }
                         return@action
                     }
@@ -86,12 +91,13 @@ class ConfigCommands : Extension() {
                         respond { content = "There is no config entry" }
                         respond {  }
                     }
-                    val newGuildConfigData: GuildConfigData = GuildConfigData(
+                    val newGuildConfigData = GuildConfigData(
                             if(arguments.joinAndLeaveLogs == true) null else oldData?.joinLeaveLogsChannel,
                             if(arguments.alertLogs == true) null else oldData?.alertLogsChannel,
                             if(arguments.modLogs == true) null else oldData?.modLogsChannel,
                             if(arguments.inviteCode == true) null else oldData?.invite,
-                            if(arguments.raidPingCount == true) null else oldData?.raidPingCount
+                            if(arguments.raidPingCount == true) null else oldData?.raidPingCount,
+                            if(arguments.msgPreview == true) null else oldData?.msgPreview
                     )
 
                     putToHashMap(guild!!.id.toLong(),newGuildConfigData)
@@ -125,6 +131,10 @@ class ConfigCommands : Extension() {
             name = "RaidPingCount"
             description = "Maximum pings allowed before anti-raid triggers. leave null to turn this off"
         }
+        val msgPreview by optionalBoolean {
+            name = "MsgPreview"
+            description = "whether to enable auto message preview from links"
+        }
     }
 
     inner class ConfigRemoveArgs : Arguments(){
@@ -147,6 +157,10 @@ class ConfigCommands : Extension() {
         val raidPingCount by optionalBoolean {
             name = "RaidPingCount"
             description = "Maximum pings allowed before anti-raid triggers. leave null to turn this off"
+        }
+        val msgPreview by optionalBoolean {
+            name = "MsgPreview"
+            description = "whether to enable auto message preview from links, null and false is same"
         }
     }
 }
