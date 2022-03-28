@@ -22,7 +22,7 @@ import io.github.maheevil.modbot.utils.deserializeAndLoadFromJson
 
 var guildConfigDataMap = HashMap<Long, GuildConfigData>()
 
-val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong())
+//val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong())
 private val TOKEN = env("TOKEN")
 
 suspend fun main() {
@@ -36,7 +36,7 @@ suspend fun main() {
         }
         applicationCommands {
             enabled = true
-            defaultGuild(TEST_SERVER_ID)
+            //defaultGuild(TEST_SERVER_ID)
         }
         extensions {
             add(::ModerationCommands)
