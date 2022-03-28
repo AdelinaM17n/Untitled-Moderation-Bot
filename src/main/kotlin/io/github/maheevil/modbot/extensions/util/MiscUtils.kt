@@ -25,7 +25,7 @@ import kotlinx.datetime.Clock
 class MiscUtils : Extension() {
     override val name = "miscutils"
     private val urlPatternRegex = Regex(
-            "https?:\\/\\/discord.com\\/channels\\/(\\d+)\\/(\\d+)\\/(\\d+)"
+            "https?://discord.com/channels/(\\d+)/(\\d+)/(\\d+)"
     )
 
     override suspend fun setup() {
